@@ -1,0 +1,149 @@
+<?xml version="1.0"?>
+<!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+	<head>
+		<macrolist>
+			<macro id="nlheader">
+				<div style="background-color: black; width: 100%; height: 100%;"><!--#151313-->
+					<img src="${bannerURL}" />
+				</div>
+			</macro>
+			<macro id="nlfooter">
+				<div style="padding-left:110px">
+					<p style="color: black; font-size: 9pt">S E R V I C E R O C K E T . C O M</p>
+				</div>
+			</macro>
+		</macrolist>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Heebo:wght@200;300;400;500;600;700;800;900"/>
+		<style>
+        body{
+            font-family: "Heebo", sans-serif;
+        }
+        .main {
+            padding-left: 28px;
+            padding-right: 28px;
+            page-break-before: always;
+        }
+        .table-main {
+            width: 100%
+        }
+        .tr-height{
+            min-height: 50px;
+            height: 50px;
+        }
+        .text-center{
+            text-align:center
+        }
+        .text-left{
+            text-align:left;
+        }
+        .table-main tbody tr td {
+            border-top: 1px solid #151313;
+            border-left: 1px solid #151313;
+            white-space: normal;
+            font-size: 10pt;
+        }
+        .label-content{
+            padding: 20px;
+        }
+        .text-content{
+            padding-left: 20px;
+            padding-top: 5px;
+        }
+        .border-right{
+            border-right: 1px solid #151313;
+        }
+        .table-main {
+            /*border-right: 1px solid #151313;*/
+            border-bottom: 1px solid #151313;
+            margin-left: 28px;
+            margin-right: 28px;
+        }
+
+        .table-top-padding {
+            padding-top: 5px;
+        }
+
+        .table-label {
+            /*background-color: #151313;*/
+            background-color: black;
+            color: white;
+            width: 10px;
+            padding:10px;
+        }
+        .table-label + td{
+            padding-left: 30px;
+        }
+
+        .table-white-top-border {
+            border-top: 1px solid white !important;
+        }
+				.label-min-height{
+						min-height: 70px;
+				}
+				.p-full-width{
+						width: 100%;
+				}
+		</style>
+	</head>
+
+	<body header="nlheader" style="background-color: #F3F2F2" header-height="165px" footer="nlfooter" footer-height="50px" padding="0in">
+<!--	<div class="main">-->
+		<h4 style="width: 100%; font-size: 17pt;font-style: normal;font-weight: 500; align: center; padding-top: 20px; padding-bottom: 17px" >Rocketeer Job Description</h4>
+		<table class="table-main">
+			<tbody>
+			<tr class="tr-height border-right" style="border-bottom: 1px solid black">
+				<td class="table-label td-center label-content" width="19%"><p class="text-center" style="width: 100%">JOB TITLE</p></td>
+				<td class="border-right text-content" colspan="3" width="81%" style="padding-top: 10px"><p class="text-left">${title}</p></td>
+			</tr>
+			<tr>
+				<td colspan="4" style="height:25px; border: 0px"></td>
+			</tr>
+			<tr class="tr-height border-right" style="min-height:70px">
+				<td class="table-label label-content label-min-height">JOB FAMILY</td>
+				<td class="text-content" width="40%" style="padding-top: 10px"><p class="text-left">${custrecord_sr_job_family}</p></td>
+				<td class="table-label label-content label-min-height" width="5%">DEPARTMENT</td>
+				<td class="border-right text-content" width="40%" style="padding-top: 10px"><p class="text-left">${custrecord_department}</p></td>
+			</tr>
+			<tr class="tr-height border-right" style="min-height:70px">
+				<td class="table-label table-white-top-border label-content label-min-height">RADFORD JOB CODE</td>
+				<td class="text-content"><p class="text-left" style="padding-top: 10px">${custrecord_sr_radford_jobcode}</p></td>
+				<td class="table-label table-white-top-border label-content label-min-height"><p class="text-left">JOB PROFILE NAME</p></td>
+				<td class="border-right text-content" style="padding-top: 10px"><p class="text-left">${custrecord_sr_job_name}</p></td>
+			</tr>
+			</tbody>
+		</table>
+
+
+		<table class="table-main table-top-padding" style="padding-top: 30px;">
+			<tbody>
+			<tr class="tr-height border-right">
+				<td class="table-label" style="min-width: 80%"><p class="text-center p-full-width" style="padding-top: 20px">ABOUT SERVICEROCKET</p></td>
+				<td class="border-right text-content" style="min-width: 20%">
+					<p class="text-left">ServiceRocket is trusted by thousands of enterprises, helping them get the most out of their software and transforming the way they do business. Headquartered in Palo Alto with offices in Sydney, Santiago, London, Toronto, and Kuala Lumpur,  our products and services help clients accelerate alignment, reduce friction, and connect with their teams, partners and customers.<br/><br/>
+
+						Working at ServiceRocket is more than a job. Our five core values drive our actions and work environment. Our employees, the Rocketeers, fuel our success. But don't just take our word for it – <a href="https://www.servicerocket.com/join/rocketeer" style="color:#0645AD">Explore what it’s like to wear the rocket</a>.
+					</p></td>
+			</tr>
+			<tr class="tr-height">
+				<td class="table-label table-white-top-border"><p class="text-center  p-full-width">SUMMARY OF THE ROLE</p></td>
+				<td class="border-right text-content"><p class="text-left">${description}</p></td>
+			</tr>
+			<tr class="tr-height">
+				<td class="table-label table-white-top-border"><p class="text-center  p-full-width">RESPONSIBILITIES</p></td>
+				<td class="border-right text-content" ><p class="text-left">${custrecord_sr_job_responsibilities}</p></td>
+			</tr>
+			<tr class="tr-height">
+				<td class="table-label table-white-top-border"><p class="text-center  p-full-width">SKILLS</p></td>
+				<td class="border-right text-content" ><p class="left">${custrecord_sr_job_skills}</p></td>
+			</tr>
+			<tr class="tr-height">
+				<td class="table-label table-white-top-border"><p class="text-center  p-full-width">QUALIFICATIONS</p></td>
+				<td class="border-right text-content" ><p class="left">${custrecordsr_job_qualifications}</p></td>
+			</tr>
+			</tbody>
+		</table>
+
+<!--	</div>-->
+	</body>
+</pdf>

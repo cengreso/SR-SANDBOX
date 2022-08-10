@@ -1,0 +1,117 @@
+<pdf>
+
+   <head>
+      <link name="NotoSans" type="font" subtype="truetype" src="${font_notosans_regular?html}"
+         src-bold="${font_notosans_bold?html}" src-italic="${nsfont.NotoSans_Italic}"
+         src-bolditalic="${nsfont.NotoSans_BoldItalic}" bytes="2" />
+      <macrolist>
+         <macro id="nlheader" style="background-color: black;">
+            <table style="width:100%; height:100%; background-color: black;">
+               <tr width="100%">
+                  <td><img style="width:50%; height:50%;"
+                        src="https://3688201.app.netsuite.com/core/media/media.nl?id=63646&amp;c=3688201&amp;h=cc450deee8b4151f2fd5&amp;fcts=20200601062629&amp;whence=" />
+                  </td>
+               </tr>
+            </table>
+         </macro>
+         <macro id="nlfooter">
+            <table style="width:100%; margin-left: 0.4in; margin-right: 0.4in; margin-top: -10px">
+               <tr width="100%">
+                  <td width="55%" style="vertical-align: bottom; color: #AAAAAA;">
+                     SERVICEROCKET.COM
+                  </td>
+               </tr>
+            </table>
+         </macro>
+      </macrolist>
+      <style>
+         * {
+            font-family: NotoSans, Arial, sans-serif;
+            font-size: 16px;
+         }
+
+         OL {
+            counter-reset: item;
+            padding-left: 10px;
+         }
+
+         LI {
+            display: block
+         }
+
+         LI:before {
+            content: counters(item, ".") " ";
+            counter-increment: item
+         }
+         p{
+         line-height: 120%;
+         }
+      </style>
+
+   </head>
+
+   <body header="nlheader" header-height="15%" footer="nlfooter" footer-height="7%" padding="0.0in 0.0in 0.0in 0.0in"
+      size="A4">
+      <br />
+
+      <div style="width:100%; margin-left: 80px; margin-right: 80px;">
+         <p align="right">{{date}}</p>               <br />
+         <p style="font-size: 32px; margin: 0; padding: 0;">Rocketeer Promotion</p>
+         <p style="font-size: 24px; margin: 0; padding: 0;">Variation to Contract</p>
+               <br />
+      
+         <p>Dear {{name}},</p>
+         <p style="margin-bottom: 20px;">It takes a lot of hard work and dedication to fuel a fast-growing company with delighted
+            customers. But at the end of the day, we don't build a great company just so that we have a
+            great company. We build it so that we can all help build our careers, families, and communities.</p>
+         <p style="margin-bottom: 20px;">We recognize that your contributions to ServiceRocket have helped us grow and at the same
+            time have grown your own skills. Thank you for all your hard work, dedication, and great
+            performance thus far.</p>
+         <p style="margin-bottom: 20px;">We are very pleased to inform you that you have been selected for a promotion, subject to your
+            agreement to the following revisions to your Employment Letter dated [Date, Month Year] (the
+            "Employment Letter".</p>
+     </div>
+     <div style="width:100%; margin-left: 80px; margin-right: 80px;">
+     
+         <p>All other terms and conditions not stated below will continue as set out in the Employment
+            Letter. This Letter will act as an Amendment to the Employment Letter.</p>
+
+         <ol>
+            <li><b>Position</b><ol>
+                  <li>1.1 You will be employed in the position of General Manager effective [Date Month Year].</li>
+                  <li>Your new duties and responsibilities associated with the role will be reflected in your new
+                     Position Description.</li>
+               </ol>
+            </li>
+
+            <li><b>Base Salary</b>
+               <p>Your base salary will increase from [currency sign] [current salary] [currency] to [currency
+                  sign] [new salary] [currency] [per annum or monthly] [for Australia state excluding
+                  superannuation], effective [Date Month Year].</p>
+
+            </li>
+            <li><b>Variable Compensation</b>
+               <p>Subject to the successful attainment of specified goals determined by your Manager, the details
+                  of which shall be provided to you within the next 30 days, you will be eligible for an annual
+                  bonus amount of up to [currency sign] [bonus amount] [currency], awarded [quarterly or
+                  semi-annually] effective [Date Month Year].</p>
+            </li>
+            <li><b>Direct Report</b>
+               <p>Your [new] direct report is [Name], [Position].</p>
+            </li>
+         </ol>
+         <p>We ask that you please review, initial and sign this Variation to Contract Letter.</p>
+         <p>Should you have any questions regarding this Letter of Transfer, please do not hesitate to
+            contact your manager or the People Team.</p>
+         <p>Congratulations on the promotion and we look forward to your continued contribution as we all
+            challenge each other to grow and create more value for our customers, team and our many
+            Rocketeer shareholders.</p>
+
+         <p>As always, we're happy to have you as part of the team and if there are ever any ideas or
+            thoughts you have to help make ServiceRocket the best place on earth to work - we�d love to
+            know!
+         </p>
+      </div>
+
+   </body>
+</pdf>

@@ -1,0 +1,712 @@
+<?xml version="1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdfset>
+    <pdf>
+        <head>
+            <link name="NotoSans" type="font" subtype="truetype" src="${font_notosans_regular?html}"
+                  src-bold="${font_notosans_bold?html}" src-italic="${nsfont.NotoSans_Italic}"
+                  src-bolditalic="${nsfont.NotoSans_BoldItalic}" bytes="2"/>
+            <macrolist>
+                <macro id="nlheader">
+                    <!--HEADER-->
+                    <table style="width:100%; background-color: #221F1F;">
+                        <tr width="100%">
+                            <td width="20%" style="padding-left: 0.4in; padding-top: 8px;"><img
+                                    src="https://3688201.app.netsuite.com/core/media/media.nl?id=63646&amp;c=3688201&amp;h=cc450deee8b4151f2fd5&amp;fcts=20200601062629&amp;whence="
+                                    width="80px" height="57px"/></td>
+                            <td width="80%"
+                                style="padding-left:1.1in;  padding-top: 8px; color: white; font-size : 13px;margin-right: -90px; white-space: nowrap;">
+                                {{exportnote}}
+                            </td>
+                            <td width="50%" style="padding-right: 0.4in; padding-top: 10px;">
+                                <table style="color: white; width: 100%; ">
+                                    <tr>
+                                        <td align="right"
+                                            style="font-size : 24px; font-weight:500; padding-bottom: 5px;padding-top: 10px">
+                                            {{documentname}}
+                                        </td>
+                                    </tr>
+                                    <tr style="padding-top: -10px;">
+                                        <td align="right" style="font-size : 14px;">
+                                            <p style="text-align: right; word-wrap: break-word">
+                                                {{{federalidnumber}}}
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <!--END HEADER-->
+                </macro>
+                <macro id="nlfooter">
+                </macro>
+            </macrolist>
+            <style type="text/css">
+                * {
+                    font-family: NotoSans, Arial, sans-serif;
+                }
+
+                body {
+                    font-family: 'Arial';
+                    font-size: 9pt;
+                }
+
+                table {
+                    font-size: 9pt;
+                    table-layout: fixed;
+                    padding: 3px;
+                }
+
+                table.body td {
+                    padding-top: 2px;
+                }
+
+                td.summarybox {
+                    font-size: 12pt;
+                    text-indent: 2px;
+                }
+
+                td.summaryboldbox {
+                    font-weight: bold;
+                    font-size: 12pt;
+                    text-indent: 0.5px;
+                }
+
+                hr {
+                    width: 100%;
+                    color: #d3d3d3;
+                    background-color: #d3d3d3;
+                    height: 1px;
+                }
+
+                .itemtable {
+                    width: 100%;
+                    margin-top: 10px;
+                    margin-left: 0.4in;
+                    margin-right: 0.4in;
+                    font-size: 9pt;
+                    table-layout: fixed;
+                }
+            </style>
+        </head>
+        <body header="nlheader" header-height="10%" footer="" footer-height="7%" padding="0.in 0.0in 0.5in 0.0in"
+              size="A4">
+        <table style="width:100%; margin-left: 0.4in; margin-right: 0.4in; padding-top: 0.2in; ">
+            <tr style="width: 100%;">
+                <td style="width: 45%;">
+                    <table>
+                        <tr>
+                            <td><strong>Attention To</strong></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>
+                                    {{nohierarchy custbody_invoice_contact}}
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span><strong>Bill To </strong></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>{{{billingaddress}}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td style="width: 55%;">
+                    <table width="100%"
+                           style="background-color: #F5F5F5; font-size:24px; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 10px;">
+                        <tr>
+                            <td>
+                                <table style="padding-bottom: -10px;">
+                                    <tr style="padding-top: 5px;">
+                                        <td class="summaryboldbox"><strong>Summary</strong></td>
+                                    </tr>
+                                </table>
+                                <hr/>
+                                <table width="100%" style="padding-top: -10px; padding-bottom: -10px;">
+                                    <tr>
+                                        <td width="40%" class="summarybox">Report Duration</td>
+                                        <td width="60%" class="summaryboldbox" align="left">
+                                            <p style="word-wrap: break-word;">{{startdate}} - {{enddate}}</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="summarybox">Invoice Date</td>
+                                        <td class="summaryboldbox" align="left">{{trandate}}</td>
+                                    </tr>
+                                </table>
+                                <hr/>
+                                <table width="100%" style="padding-top: -10px; padding-bottom: -10px;">
+                                    <tr>
+                                        <td width="40%" class="summaryboldbox"><strong>Total Due</strong></td>
+                                        <!--                                        <td width="60%" class="summaryboldbox" align="left">{{total}}</td>-->
+                                        <td width="60%" class="summaryboldbox" align="left">{{changedTotal}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="summarybox">Due Date</td>
+                                        <td class="summaryboldbox" align="left">{{duedate}}</td>
+                                    </tr>
+                                </table>
+                                <hr/>
+                                <table width="100%" style="padding-top: -10px;">
+                                    <tr>
+                                        <td class="summarybox" width="40%">Invoice#</td>
+                                        <td class="summaryboldbox" width="60%" align="left">{{tranid}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="summarybox">PO</td>
+                                        <td class="summaryboldbox" align="left">
+                                            {{otherrefnum}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="summarybox">Terms</td>
+                                        <td class="summaryboldbox" align="left">{{terms}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="summarybox">Currency</td>
+                                        <!--                                        <td class="summaryboldbox" align="left" >{{currencysymbol}}</td>-->
+                                        <td class="summaryboldbox" align="left">USD</td>
+                                    </tr>
+                                    {{#if displayfxrate}}
+                                    <tr>
+                                        <td class="summarybox">Exchange Rate</td>
+                                        <td class="summaryboldbox" align="left">{{exchangerate}}</td>
+                                    </tr>
+                                    {{else}}
+                                    {{/if}}
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <hr style="margin-left: 0.4in; margin-right: 0.4in; "/>
+        <p style="margin-left: 0.5in; font-weight: bold; font-size: 14pt; text-align: justify">Details</p>
+        <table class="itemtable">
+            <thead>
+            <tr style="background-color: #888888; color: #FFFFFF; font-weight: bold;">
+                <th width="5%">
+                    <table style="width:100%;">
+                        <tr>
+                            <td align="left">No.</td>
+                        </tr>
+                    </table>
+                </th>
+                <th width="35%">
+                    <table style="width:100%;">
+                        <tr>
+                            <td align="left">Description</td>
+                        </tr>
+                    </table>
+                </th>
+                <th width="10%">
+                    <table style="width:100%;">
+                        <tr>
+                                <td align="right">{{@root.custbody_unittype}}</td>
+<!--                            <td align="right">Qty</td>-->
+                        </tr>
+                    </table>
+                </th>
+                <th width="15%">
+                    <table style="width:100%;">
+                        <tr>
+                            <td align="right">Amount</td>
+                        </tr>
+                    </table>
+                </th>
+                <th width="15%">
+                    <table style="width:100%;">
+                        <tr>
+                            <td align="right">{{taxlabel}}</td>
+                        </tr>
+                    </table>
+                </th>
+                {{#if @root.haslinediscount}}
+                <th width="15%">
+                    <table style="width:100%;">
+                        <tr>
+                            <td align="right">Discount</td>
+                        </tr>
+                    </table>
+                </th>
+                {{else}}
+                {{/if}}
+                <th width="15%">
+                    <table style="width:100%;">
+                        <tr>
+                            <td align="right">Gross Amount</td>
+                        </tr>
+                    </table>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#item}}
+            {{#if displayonpdf}}
+            <tr style="background-color: {{if_even @index}};">
+                <td align="center" valign="middle" width="5%">
+                    {{no}}
+                </td>
+                <td>
+                    <p style="text-align: left">{{{description}}}</p>
+                </td>
+                <td align="right" valign="middle">{{quantity}}</td>
+<!--                <td align="right" valign="middle">{{rate}}</td>-->
+                <td align="right" valign="middle">{{amount}}</td>
+                <td align="right" valign="middle">{{tax1amt}}</td>
+                {{#if @root.haslinediscount}}
+                <td align="right" valign="middle">
+                    <table padding="0px">
+                        {{#discountdetail}}
+                        <tr padding="0px">
+                            <td padding="1px" align="right">{{{desctription}}}</td>
+                        </tr>
+                        <tr padding="0px">
+                            <td padding="1px" align="right">{{#replace "-" ""}}{{amount}}{{/replace}}</td>
+                        </tr>
+                        {{/discountdetail}}
+                    </table>
+                </td>
+                {{else}}
+                {{/if}}
+<!--                <td align="right" valign="middle">{{amount}}</td>-->
+                <td align="right" valign="middle">{{grossamt}}</td>
+            </tr>
+            {{else}}
+            {{/if}}
+            {{/item}}
+            </tbody>
+        </table>
+        <table style="width:100%; margin-left: 0.4in; margin-right: 0.4in;">
+            <tr width="100%">
+                <td width="45%"></td>
+                <td width="55%">
+                    <!---Sub Total-->
+                    <table width="100%" style="padding-bottom: -10px;">
+                        <tr>
+                            <td class="summarybox">Sub-total</td>
+<!--                            <td class="summarybox" align="right">{{currencysymbol}} {{subtotal}}</td>-->
+                            <td class="summarybox" align="right">{{changedTotal}}</td>
+                        </tr>
+                        {{#if hasrdiscount}}
+                        <tr>
+                            <td class="summarybox">Discount</td>
+                            <td class="summarybox" align="right">{{currencysymbol}} {{#replace "-" ""}} {{currency
+                                srdiscount}} {{/replace}}
+                            </td>
+                        </tr>
+                        {{else}}
+                        {{/if}}
+                        <!--                     {{#if hastax}}-->
+                        <!--                     <tr>-->
+                        <!--                        <td class="summarybox" >{{taxlabel}} </td>-->
+                        <!--                        <td class="summarybox" align="right">{{currencysymbol}} {{taxtotal}}</td>-->
+                        <!--                     </tr>-->
+                        <!--                     {{else}}-->
+                        <!--                     {{/if}}-->
+                        {{#if hastax}}
+                        <tr>
+                            <td>{{taxcode}}</td>
+<!--                            <td align="right">{{currencysymbol}} {{taxtotal}}</td>-->
+                            <td align="right">{{taxtotal}}</td>
+                        </tr>
+                        {{else}}
+                        <tr>
+                            <td>{{taxcode}}</td>
+                            <td align="right">{{currencysymbol}} {{discounttotal}}</td>
+                        </tr>
+                        {{/if}}
+                    </table>
+                    <hr/>
+                    <table width="100%" style="padding-top: -10px;">
+                        <tr>
+                            <td class="summaryboldbox">Total (USD)</td>
+                            <td class="summaryboldbox" align="right">{{changedTotal}}</td>
+                        </tr>
+                        <tr>
+                            <td class="summaryboldbox">Total ({{currencysymbol}})</td>
+                            <td class="summaryboldbox" align="right">{{total}}</td>
+                        </tr>
+                        <tr >
+                            <td class="summaryex" >
+                                Exchange Rate: {{usdExchangeRate}}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table style="width:100%; margin-left: 0.4in; margin-right: 0.4in;height: 100%; font-size: 12px;">
+            <tr>
+                <td> Amount in Words:</td>
+            </tr>
+            <tr>
+                <td style=" margin-bottom: -5px;"> USD: {{wordUS}}</td>
+            </tr>
+            <tr>
+                <td style=" margin-bottom: -20px;"> INR: {{wordRS}}</td>
+            </tr>
+        </table>
+        <!--Selection Item-->
+        <br/>
+        <table style="width:100%; height:100%; margin-left: 0.4in; margin-right: 0.4in;">
+            <tr width="100%">
+                <td width="50%" style="vertical-align: top; text-align: left;">
+                    <table width="100%" align="left">
+                        <tr>
+                            <td><strong>{{subsidiary}}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{{custrecord_sr_addresss}}}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="50%" style="vertical-align: bottom;">
+                    <table width="100%">
+                        <tr>
+                            <td><strong>Payment Method</strong></td>
+                        </tr>
+                        <tr rowspan="2">
+                            <td><strong>Bank Transfer</strong></td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td>
+                                <span>{{{paymentinstruction}}}</span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <div style="width:100%; height:100%; margin-left: 0.4in; margin-right: 0.4in;">
+            <p class="authorised" style="padding-top: 30px">Authorised Signatory</p>
+            <p class="authorised">Sign:</p>
+            <div class="authorised" style="line-height: 1.6;">
+                <p>Name:</p>
+                <p>Date:</p>
+                <p>Place of Signature:</p>
+            </div>
+        </div>
+        </body>
+    </pdf>
+
+    {{#if custbody_sf_includecharges}}
+    <pdf>
+        <head>
+            <link name="NotoSans" type="font" subtype="truetype" src="${font_notosans_regular?html}"
+                  src-bold="${font_notosans_bold?html}" src-italic="${nsfont.NotoSans_Italic}"
+                  src-bolditalic="${nsfont.NotoSans_BoldItalic}" bytes="2"/>
+            <macrolist>
+                <macro id="nlheader">
+                    <!--HEADER-->
+                    <table style="width:100%; background-color: #221F1F;">
+                        <tr width="100%">
+                            <td width="20%" style="padding-left: 0.4in; padding-top: 8px;"><img
+                                    src="https://3688201.app.netsuite.com/core/media/media.nl?id=63646&amp;c=3688201&amp;h=cc450deee8b4151f2fd5&amp;fcts=20200601062629&amp;whence="
+                                    width="80px" height="57px"/></td>
+                            <td width="50%" style="padding-right: 0.4in; padding-top: 10px; padding-bottom: 10px; ;">
+                                <table style="color: white; width: 100%; ">
+                                    <tr>
+                                        <td align="right" style="font-size : 24px; font-weight:500;">
+                                            Invoice Details
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <!--END HEADER-->
+                </macro>
+                <macro id="nlfooter">
+                    <!--FOOTER-->
+                    <table style="width:100%; margin-left: 0.4in; margin-right: 0.4in; ">
+                        <tr width="100%">
+                            <td width="57%" style="vertical-align: bottom;">
+                                <table width="100%">
+                                    <tr>
+                                        <td class="summarybox"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="summaryboldbox">{{subsidiary}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="paymentbox">
+                                            https://www.servicerocket.com/
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td width="43%" style="vertical-align: bottom;">
+                                <table width="100%">
+                                    <tr>
+                                        <td class="label">Need help? <br/>
+                                            Email accounts@servicerocket.com <br/>
+                                            #WeGotYourBack
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    <!--FOOTER-->
+                </macro>
+            </macrolist>
+            <style type="text/css">* {
+                font-family: NotoSans, Arial, sans-serif;
+            }
+
+            body {
+                font-family: 'Arial';
+            }
+
+            table {
+                font-size: 9pt;
+                table-layout: fixed;
+                padding: 3px;
+            }
+
+            table.footer td {
+                padding: 0px;
+                font-size: 8pt;
+            }
+
+            table.body td {
+                padding-top: 2px;
+            }
+
+            table.total {
+                page-break-inside: avoid;
+            }
+
+            tr.totalrow {
+                background-color: #e3e3e3;
+                line-height: 200%;
+            }
+
+            td.totalboxtop {
+                font-size: 12pt;
+                background-color: #e3e3e3;
+            }
+
+            td.addressheader {
+                font-size: 8pt;
+                padding-top: 6px;
+                padding-bottom: 2px;
+            }
+
+            td.address {
+                padding-top: 0px;
+            }
+
+            td.totalboxmid {
+                font-size: 28pt;
+                padding-top: 20px;
+                background-color: #e3e3e3;
+            }
+
+            td.totalboxbot {
+                background-color: #e3e3e3;
+                font-weight: bold;
+            }
+
+            td.summarybox {
+                font-size: 14pt;
+                text-indent: 2px;
+            }
+
+            td.label {
+                font-weight: bold;
+                font-size: 12pt;
+                text-indent: 2px;
+            }
+
+            td.summaryboldbox {
+                font-weight: bold;
+                font-size: 14pt;
+                text-indent: 2px;
+            }
+
+            td.paymentbox {
+                font-size: 10pt;
+                text-indent: 2px;
+            }
+
+            td.paymentboldbox {
+                font-weight: bold;
+                font-size: 10pt;
+                text-indent: 2px;
+            }
+
+            span.title {
+                font-size: 28pt;
+            }
+
+            span.number {
+                font-size: 16pt;
+            }
+
+            span.itemname {
+                font-weight: bold;
+                line-height: 150%;
+            }
+
+            hr {
+                width: 100%;
+                color: #d3d3d3;
+                background-color: #d3d3d3;
+                height: 1px;
+            }
+
+            .itemtable {
+                width: 100%;
+                margin-top: 10px;
+                margin-left: 0.4in;
+                margin-right: 0.4in;
+                font-size: 9pt;
+                table-layout: fixed;
+            }
+            </style>
+        </head>
+        <body header="nlheader" header-height="7%" footer="nlfooter" footer-height="10%" padding="0in 0in 0.5in 0.0in"
+              size="A4">
+        <table style="width:100%; margin-left: 0.4in; margin-right: 0.4in; padding-top: 0.3in; ">
+            <tr>
+                <td>
+                    <table style="width:100%; background-color: #F5F5F5;">
+                        <tr style="width: 100%;">
+                            <td style="width: 100%;">
+                                <table style="padding-bottom: -10px;">
+                                    <tr>
+                                        <td class="summaryboldbox"><strong>Summary</strong></td>
+                                    </tr>
+                                </table>
+                                <hr/>
+                                <table style="width: 100%; padding-top: -10px;">
+                                    <tr width="100%">
+                                        <td width="50%">
+                                            <table style="font-size: 11pt; width: 100%">
+                                                <tr>
+                                                    <td width="40%">Customer:Project</td>
+                                                    <td width="60%" style="font-weight: bold" align="left"><p
+                                                            style="word-wrap: break-word;">{{nohierarchy job}}</p></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="40%">Invoice Number</td>
+                                                    <td width="60%" style="font-weight: bold" align="left">{{tranid}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="40%">Date</td>
+                                                    <td width="60%" style="font-weight: bold" align="left">
+                                                        {{trandate}}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td width="50%">
+                                            <table style="font-size: 11pt; width: 100%">
+                                                <tr>
+                                                    <td width="40%">Report Duration</td>
+                                                    <td width="60%" style="font-weight: bold" align="left">
+                                                        {{startdate}} - {{enddate}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="40%">Total {{@root.custbody_unittype}}</td>
+                                                    <td width="60%" style="font-weight: bold" align="left">
+                                                        {{totalhours}}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="40%">Total Amount</td>
+                                                    <td width="60%" style="font-weight: bold" align="left">
+                                                        {{totalamount}}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <!--Details-->
+        <p style="margin-left: 0.5in; font-weight: bold; font-size: 14pt;">Details</p>
+        <table class="itemtable">
+            <thead>
+            <tr style="background-color: #888888; color: #FFFFFF; font-weight: bold;">
+                <th width="10%" valign="middle">
+                    <table style="width:100%;">
+                        <tr>
+                            <td align="left">Date</td>
+                        </tr>
+                    </table>
+                </th>
+                <th width="13%" valign="middle">
+                    <table style="width:100%;">
+                        <tr>
+                            <td align="left">Employee</td>
+                        </tr>
+                    </table>
+                </th>
+                <th width="15%" valign="middle">
+                    <table style="width:100%;">
+                        <tr>
+                            <td align="left">Item</td>
+                        </tr>
+                    </table>
+                </th>
+                <th width="29%" valign="middle">
+                    <table style="width:100%;">
+                        <tr>
+                            <td align="left">Memo</td>
+                        </tr>
+                    </table>
+                </th>
+                <th align="right" width="5%" valign="middle">{{@root.custbody_unittype}}</th>
+                <th align="right" width="8%" valign="middle">Rate</th>
+                <th align="right" width="8%" valign="middle" padding-right="3px">Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each charges}}
+            <tr style="background-color: {{if_even @index}};">
+                <td align="left" style="white-space: nowrap" valign="middle">{{date}}</td>
+                <td align="left" style="white-space: nowrap" valign="middle">{{employee}}</td>
+                <td align="left" valign="middle"><p style="word-wrap: break-word;">{{item}}</p></td>
+                <td align="left" style="line-height: normal; padding-top: 8px; padding-left: 7px">{{memo}}</td>
+                <td align="right" valign="middle">{{time}}</td>
+                <td align="right" valign="middle">{{rate}}</td>
+                <td align="right" valign="middle">{{amount}}</td>
+            </tr>
+            {{else}}
+            {{/each}}
+            </tbody>
+        </table>
+        <table style="alignment: bottom; vertical-align: bottom;">
+            <tr>
+                <td>{{totalpages}}</td>
+            </tr>
+        </table>
+        </body>
+    </pdf>
+    {{else}}
+    {{/if}}
+</pdfset>

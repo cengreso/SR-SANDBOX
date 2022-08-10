@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+
+    <head>
+        <link name="NotoSans" type="font" subtype="truetype" src="${nsfont.NotoSans_Regular}"
+            src-bold="${nsfont.NotoSans_Bold}" src-italic="${nsfont.NotoSans_Italic}"
+            src-bolditalic="${nsfont.NotoSans_BoldItalic}" bytes="2" />
+        <macrolist>
+         <macro id="nlheader" style="background-color: black;">
+            <table style="width:100%; height:100%; background-color: black;">
+               <tr width="100%">
+                  <td style="margin-left: 0.5in;"><img style="width:50%; height:50%; "
+                        src="https://3688201.app.netsuite.com/core/media/media.nl?id=63646&amp;c=3688201&amp;h=cc450deee8b4151f2fd5&amp;fcts=20200601062629&amp;whence=" />
+                  </td>
+               </tr>
+            </table>
+         </macro>
+            <macro id="nlfooter"  style="margin-left: 0.5in;">
+                <p><span style="font-size:16px; margin-left: 0.5in;">S E R V I C E R O C K E T . C O M</span></p>
+            </macro>
+        </macrolist>
+        <style type="text/css">
+            * {
+                font-family: NotoSans, Arial, sans-serif;
+                font-size: 18px;
+            }
+
+            table {
+                font-size: 18px;
+                table-layout: fixed;
+                width: 100%;
+            }
+
+            th {
+                font-weight: bold;
+                font-size: 18px;
+                vertical-align: middle;
+                padding: 5px 6px 3px;
+                background-color: #e3e3e3;
+                color: #333333;
+                padding-bottom: 10px;
+                padding-top: 10px;
+            }
+
+            td {
+                padding: 4px 6px;
+            }
+
+            b {
+                font-weight: bold;
+                color: #333333;
+            }
+        </style>
+    </head>
+
+    <body header="nlheader" header-height="10%" footer="nlfooter" footer-height="20pt" padding="0.0in 0.0in 0.5in 0.0in"
+        size="A4">
+            
+		<table cellpadding="1" cellspacing="1" style="width:100%;" padding="0.5in 0.5in 0.5in 0.5in">
+		    <tr>
+                <td>&nbsp;</td>
+                <td align="right">{{date}}</td>
+            </tr>
+            <tr>
+                <td colspan="2"><span style="font-size:36px;">{{title}}</span></td>
+            </tr>
+            <tr>
+                <td colspan="2"><span style="font-size:26px;">{{seactionhead}}</span></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="height: 25px;"></td>
+            </tr>
+            {{#each (paragraph introduction)}}
+            <tr>
+                <td colspan="2" style="height: 10px; text-align: justify;">{{this}}</td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            {{/each}}
+            <tr>
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            {{#each section}}
+            <tr>
+                <td colspan="2" style="height: 10px; text-align: justify;">
+                    <strong>{{heading}}</strong>
+                </td>
+            </tr>
+            	{{#each (paragraph body)}}
+            <tr>
+                <td colspan="2" style="height: 10px; text-align: justify;">
+                   {{this}}
+                </td>
+            </tr>
+            	{{/each}}
+            <tr>
+                <td colspan="2" style="height: 10px;">&nbsp;</td>
+            </tr>
+            {{/each}}
+            <tr>
+                <td colspan="2" style="height: 10px;">&nbsp;</td>
+            </tr>
+			{{#each (paragraph footer)}}
+            <tr>
+                <td colspan="2" style="height: 10px; text-align: justify;">{{this}}</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td align="right"></td>
+            </tr>
+             {{/each}}
+        </table>
+            
+            
+
+    </body>
+</pdf>

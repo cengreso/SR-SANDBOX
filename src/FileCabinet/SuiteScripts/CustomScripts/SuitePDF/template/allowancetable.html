@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<html>
+	<head>
+		<title>Allowances by Subsidiary</title>
+		<link name="NotoSans" type="font" subtype="truetype" src="${nsfont.NotoSans_Regular}"
+            src-bold="${nsfont.NotoSans_Bold}" src-italic="${nsfont.NotoSans_Italic}"
+            src-bolditalic="${nsfont.NotoSans_BoldItalic}" bytes="2" />
+        <style type="text/css">
+            * {
+                font-family: NotoSans, Arial, sans-serif;
+                font-size: 10px;
+            }
+			h1{
+			 font-family: NotoSans, Arial, sans-serif;
+			}
+            table {
+                font-size: 18px;
+                table-layout: fixed;
+                border-top: 5px solid #FFAC07;
+            }
+
+            th {
+                font-weight: bold;
+                font-size: 12px;
+                vertical-align: middle;
+                padding: 5px 5px 5px 5px;
+                background-color: #e3e3e3;
+                color: #333333;
+                border-bottom: 1px solid #dee2e6;
+            	border-left: 1px solid #dee2e6;
+            }
+
+            td {
+            	 padding: 5px 5px 5px 5px;
+            	 border-bottom: 1px solid #dee2e6;
+            	 border-left: 1px solid #dee2e6;
+            }
+
+            b {
+                font-weight: bold;
+                color: #333333;
+            }
+        </style>
+	</head>
+	<body>
+			<h1> ServiceRocket Lookup Table - Allowances by Subsidiary</h1>
+			<p><i> Allowance amounts are provided as a reference table and does not constitute entitlement. Individual Rocketeer eligibility will vary according to policy.</i>
+			</p> 
+			<p><i> Report Generated on {{generated}}</i></p>
+		
+
+			<table width="100%">
+			<thead>
+				<tr>
+					<th style="width: 15%;">{{header.[0].title}}</th>
+					<th style="width: 27%;">{{header.[1].title}}</th>
+					<th style="width: 28%;">{{header.[2].title}}</th>
+					<th style="width: 15%;">{{header.[3].title}}</th>
+					<th style="width: 15%; border-right: 1px solid #dee2e6;">{{header.[4].title}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each data}}
+				<tr>
+				
+				
+				<td><p style="text-align: left; word-wrap: break-word">{{{this.[0]}}}</p> </td>
+				<td><p style="text-align: left; word-wrap: break-word">{{{this.[1]}}}</p> </td>
+				<td><p style="text-align: left; word-wrap: break-word">{{{this.[2]}}}</p> </td>
+				<td align="right">{{{this.[3]}}} </td>
+				<td style="border-right: 1px solid #dee2e6;" ><p style="text-align: left; word-wrap: break-word">{{{this.[4]}}}</p> </td>
+
+				</tr>
+				{{/each}}
+			</tbody>
+			</table>
+	
+
+	</body>
+</html>
+</pdf>
