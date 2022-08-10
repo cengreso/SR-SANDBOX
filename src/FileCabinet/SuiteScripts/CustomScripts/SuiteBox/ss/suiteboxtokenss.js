@@ -22,7 +22,7 @@ function(https, record, suitebox) {
 
     	var refreshType = '1'; 
     	
-		var recToken = record.load({type:'customrecord_suite_box', id: 5});
+		var recToken = record.load({type:'customrecord_suite_box', id: 1});
 		var objHeader = { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': '*/*'}; 
 		
 		

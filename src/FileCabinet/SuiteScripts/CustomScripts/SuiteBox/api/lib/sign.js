@@ -15,7 +15,7 @@ function(https) {
 			
 			var resp = https.post({
 				url: 'https://api.box.com/2.0/sign_requests', 
-				body: JSON.stringify(option), 
+				body: JSON.stringify(option.data), 
 				headers: {	
 					'Content-Type': 'application/json', 
 					'Authorization': 'Bearer {custsecret_box_apikey}'
@@ -48,7 +48,7 @@ function(https) {
 					objBody.message = resp.body;
 				}
 
-				retMe.status = 'SUCCESS';
+				retMe.status = 'FAILED';
 				retMe.response = {
 					message: resp.code + ': ' + objBody.message
 				};
