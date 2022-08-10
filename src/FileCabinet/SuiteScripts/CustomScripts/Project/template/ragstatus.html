@@ -1,0 +1,67 @@
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <title>RAG Status</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="https://3688201.app.netsuite.com/core/media/media.nl?id=105640&c=3688201&h=wXEhBCvahXBXhibyZG-iiGJqt40Nu9g0haBRaCdzNpZ-XUJw&_xt=.css" rel="stylesheet" id="bootstrap-css">
+      <style type="text/css">
+         .notice {
+         padding: 15px;
+         background-color: #fafafa;
+         border-left: 6px solid #7f7f84;
+         margin-bottom: 10px;
+         -webkit-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+         -moz-box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+         box-shadow: 0 5px 8px -6px rgba(0,0,0,.2);
+         }
+         .notice-red {
+         padding: 10px;
+         font-size: 100%;
+         border-color: #FF0000;
+         }
+         .notice-red {
+         border-color: #FF0000;
+         }
+         .notice-red>strong {
+         font-size: 150%;
+         color: #FF0000;
+         } 
+         .notice-amber {
+         padding: 10px;
+         font-size: 100%;
+         border-color: #FFBF00;
+         }
+         .notice-amber {
+         border-color: #FFBF00;
+         }
+         .notice-amber>strong {
+         font-size: 150%;
+         color: #FFBF00;
+         }
+         .notice-green {
+         padding: 10px;
+         font-size: 100%;
+         border-color: #00B300;
+         }
+         .notice-green {
+         border-color: #00B300;
+         }
+         .notice-green>strong {
+         font-size: 150%;
+         color: #00B300;
+         }
+      </style>
+      <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+   </head>
+   <body>
+      <div>
+         <div class="notice notice-{{status}}">
+            <strong>{{name}}</strong><br/>
+            {{author}}<br/>
+            {{date}}<br/>
+            {{notes}}<br/>
+         </div>
+      </div>
+      <script type="text/javascript"></script>
+   </body>
+</html>

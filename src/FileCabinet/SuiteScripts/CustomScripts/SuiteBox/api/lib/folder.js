@@ -1,9 +1,67 @@
-define(['N/https'],
+define(['N/https','../suitebox.js'],
 
-function(https) {
+function(https,suiteBoxMain) {
    
-	create = function(option){
-		
+	create = function(option){ // createFolder v2
+		try{
+
+			// var retMe = {
+			// 	status: '',
+			// 	request : option
+			// };
+			// var objSuiteBox = suiteBoxMain.getSuiteBoxConfig(option.record);
+
+			var objSuiteBox = getSuiteBoxConfig(objRecord.record);
+
+			if(objSuiteBox.status == 'bad'){
+				objSuiteBox.status = 'failed';
+				return objSuiteBox;
+			}
+			else if(objSuiteBox.status == 'ok') {
+
+				var sParent = '';
+
+				if(objFolder.parent != null && objFolder.parent != ''){
+					sParent = objFolder.parent;
+				}
+				else if (objSuiteBox.parent != null && objSuiteBox.parent != '') {
+					sParent = objSuiteBox.parent;
+				}
+
+				var objPayload ={	name: objSuiteBox.prefix + objFolder.name,
+					parent: {id : objSuiteBox.parent}};
+				var objHeader =	{	'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + objSuiteBox.accesstoken};
+
+				log.audit({title: 'createFolder', details: 'request: ' + JSON.stringify(objPayload)});
+
+				var objResp = https.post({url: 'https://api.box.com/2.0/folders', body: JSON.stringify(objPayload), headers: objHeader});
+
+				log.audit({title: 'createFolder', details: 'response: ' + objResp.code + ' ' + objResp.body});
+
+				if (objResp.code == 201) {
+
+					var objFolder = JSON.parse(objResp.body);
+
+					var recFolder = record.create({type: 'customrecord_box_record_folder'});
+					recFolder.setValue({fieldId: 'custrecord_ns_record_id', value: objRecord.id.toString()});
+					recFolder.setValue({fieldId: 'custrecord_box_record_folder_id', value: objFolder.id});
+					recFolder.setValue({fieldId: 'custrecord_netsuite_record_type', value: objRecord.record});
+					var id = recFolder.save();
+					objFolder.status = 'success';
+					return objFolder;
+				}
+				else{
+					return {status: 'failed',
+						message: objResp.code  + ':' + objResp.body};
+				}
+			}
+		}
+		catch (err){
+			log.audit({title: 'createFolder', details: 'err:' + err});
+			return {status: 'failed',
+				message: 'ERROR: ' + err};
+		}
 	};
 	
 	update = function(option){
