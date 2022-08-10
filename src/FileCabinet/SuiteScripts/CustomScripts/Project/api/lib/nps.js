@@ -5,16 +5,7 @@ define(['N/record', 'N/query', 'N/search', '../../../NetSpot/api/netspot', '../.
 function(record, query, search, netspot, moment) {
 	
 	checkContacts = function(option){
-		
-		var recProject = option.record;
-		
-		if(recProject.getValue('custentity4') != 7){
-			return true;
-		}
-		else if(recProject.getValue('parent') != recProject.getValue('customer')){
-			return true;
-		}
-		
+
 		var src = search.create({
 		    type: 'contact',
 		    columns: ['custentity_hubspot_id']
@@ -34,6 +25,17 @@ function(record, query, search, netspot, moment) {
 	        operator: search.Operator.ANYOF,
 	        values: 5 //NPS Contact Role
 	    }));
+
+		// src.filters.push(search.createFilter({
+	    //     name: 'role',
+	    //     operator: search.Operator.ANYOF,
+	    //     values: 5 //NPS Contact Role
+	    // }));
+
+		// src.filters.push(search.createFilter({
+	    //     name: 'custentity_hubspot_id',
+	    //     operator: search.Operator.ISNOTEMPTY
+	    // }));
 		
 		var scrResultSet = src.run();
 		var srcResult = scrResultSet.getRange({
@@ -42,7 +44,11 @@ function(record, query, search, netspot, moment) {
 		});
 		
 		if(srcResult.length > 0){
-			return true;
+			return {
+				hubspotid: srcResult[0].getValue({
+                	name: 'custentity_hubspot_id'
+            	})
+			};
 		}
 		else{
 			return false;

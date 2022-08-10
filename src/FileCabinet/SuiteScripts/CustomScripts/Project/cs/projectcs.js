@@ -165,7 +165,7 @@ function(message, runtime, project) {
 	    	            type: message.Type.ERROR
 	    	        });
 	    			
-	    			
+	    			messSubsidiary.show();
 	    			
 	    			return false;
 				}
@@ -182,24 +182,43 @@ function(message, runtime, project) {
 				if(recCurr.getValue('entitystatus') == 1 ||
 						recCurr.getValue('entitystatus') == 2){
 					
-					var hasNPS = false;
-					
-					hasNPS = project.checkNPSContact({
-						record: recCurr
-					});
-					
-		    		if(!hasNPS){
-		    			
-		    			var messNps = message.create({
-		    	            title: 'NPS_SURVEY',
-		    	            message: "This Project doesn't have an NPS Survey Contact. Please add an NPS Survey Contact under Relationships tab.",
-		    	            type: message.Type.ERROR
-		    	        });
+                    if(recCurr.getValue('parent') == recCurr.getValue('customer')){
 
-		    			messNps.show();
-		    			
-		    			return false;
-		    		}
+                        var hasNPS = false;
+					
+                        hasNPS = project.checkNPSContact({
+                            record: recCurr
+                        });
+                        
+                        if(!hasNPS){
+                            
+                            var messNps = message.create({
+                                title: 'NPS_SURVEY',
+                                message: "This Project doesn't have an NPS Survey Contact. Please add an NPS Survey Contact under Relationships tab.",
+                                type: message.Type.ERROR
+                            });
+    
+                            messNps.show();
+                            
+                            return false;
+                        }
+                        else{
+
+                            if(hasNPS.hubspotid == null && hasNPS.hubspotid == ''){
+
+                                var messNps = message.create({
+                                    title: 'NPS_SURVEY',
+                                    message: "The NPS Survey Contact does not contain HubSpot ID. Please check if the contact exists in HubSpot, get the HubSpot ID and update the NPS Survey Contact.",
+                                    type: message.Type.ERROR
+                                });
+
+                                    
+                                messNps.show();
+                                
+                                return false;
+                            }
+                        }
+                    }
 				}
 			}
 			else{

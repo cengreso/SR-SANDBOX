@@ -3,9 +3,9 @@
  * @NScriptType UserEventScript
  * @NModuleScope SameAccount
  */
-define(['N/record', 'N/runtime', '../../Box/box', '../api/project'],
+define(['N/record', 'N/runtime', 'N/ui/serverWidget', 'N/file', '../../Box/box', '../api/project'],
 
-function(record, runtime, box, project) {
+function(record, runtime, serverWidget, file, box, project) {
    
     /**
      * Function definition to be triggered before record is loaded.
@@ -21,7 +21,35 @@ function(record, runtime, box, project) {
     	try{
     		
     		 if(scriptContext.type == scriptContext.UserEventType.VIEW || scriptContext.type == scriptContext.UserEventType.EDIT) {
+
     			 project.getLatestRAG(scriptContext);
+
+                 if(scriptContext.type == scriptContext.UserEventType.VIEW){
+
+                    var form = scriptContext.form;
+
+                    var html = file.load({
+                        id: '../btn/btn.html'
+                    }).getContents(); //btn.html
+    
+                    var insertHml = form.addField({
+                        id: 'custpage_pa_jquery1',
+                        type: serverWidget.FieldType.INLINEHTML,
+                        label: 'JQ'
+                    });
+
+                    insertHml.defaultValue = html.replace('{{id}}', scriptContext.newRecord.id);
+
+
+                    form.addButton({
+                        id: 'custpage_btn_scopingdoc',
+                        label: 'Scoping Document ',
+                        functionName: 'printScopingDoc'
+                    });
+
+
+
+                }
     		 }
     	}
     	catch(err){
