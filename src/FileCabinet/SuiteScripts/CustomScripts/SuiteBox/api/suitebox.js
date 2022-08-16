@@ -1,11 +1,10 @@
-define(['N/https', 'N/record', 'N/search', 'N/email', 'N/query', './lib/folder', './lib/file', './lib/sign'],
+define(['N/https', 'N/record', 'N/search', 'N/email', 'N/query', './lib/folder', './lib/file', './lib/sign','./recordlib/employee'],
 /**
  * @param {https} https
  * @param {record} record
  * @param {search} search
  */
-function(https, record, search, email, query, folder, boxfile, sign) {
-	
+function(https, record, search, email, query, folder, boxfile, sign, employeelib) {
 	createFolder = function(objFolder, objRecord) {
 		
 		try{
@@ -62,7 +61,15 @@ function(https, record, search, email, query, folder, boxfile, sign) {
 					message: 'ERROR: ' + err};
 		}
 	};
-	
+	createFolder2 = function(options) {
+		try{
+		if(options.type == "employee" && options.suiteboxtype == 'onboarding'){
+			return employeelib.onboardEmployeeFolder(options)
+		}
+		}catch(e){
+			log.debug('error on createFolder2', e)
+		}
+	};
 	addCollab = function(objCollab, recType) {
 		
 		try{
@@ -314,6 +321,7 @@ function(https, record, search, email, query, folder, boxfile, sign) {
 	
     return {
     	createFolder: createFolder,
+			createFolder2:createFolder2,
     	addCollab: addCollab,
     	emailUpload: emailUpload,
     	getFolderRecord: getFolderRecord,

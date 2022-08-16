@@ -1,15 +1,14 @@
-define(['N/https','../suitebox.js'],
+define(['N/https','../suitebox.js','N/record'],
 
-function(https,suiteBoxMain) {
+function(https,suiteBoxMain,record) {
    
-	create = function(option){ // createFolder v2
-		try{
+	create = function(options){ // createFolder v2
+		log.debug('option', options)
 
-			// var retMe = {
-			// 	status: '',
-			// 	request : option
-			// };
-			// var objSuiteBox = suiteBoxMain.getSuiteBoxConfig(option.record);
+		var objFolder = options.objFolder;
+		var objRecord = options.objRecord;
+
+		try{
 
 			var objSuiteBox = getSuiteBoxConfig(objRecord.record);
 
@@ -28,14 +27,25 @@ function(https,suiteBoxMain) {
 					sParent = objSuiteBox.parent;
 				}
 
-				var objPayload ={	name: objSuiteBox.prefix + objFolder.name,
-					parent: {id : objSuiteBox.parent}};
-				var objHeader =	{	'Content-Type': 'application/json',
-					Authorization: 'Bearer ' + objSuiteBox.accesstoken};
+
+				var objPayload = {
+					name: objSuiteBox.prefix + objFolder.name,
+					parent: {
+						id : objFolder.parent
+					}
+				};
 
 				log.audit({title: 'createFolder', details: 'request: ' + JSON.stringify(objPayload)});
 
-				var objResp = https.post({url: 'https://api.box.com/2.0/folders', body: JSON.stringify(objPayload), headers: objHeader});
+				var objResp = https.post({
+						url: 'https://api.box.com/2.0/folders',
+						body: JSON.stringify(objPayload),
+							headers: {
+							'Content-Type': 'application/json',
+								'Authorization': 'Bearer {custsecret_box_apikey}'
+						},
+						credentials: ['custsecret_box_apikey']
+				});
 
 				log.audit({title: 'createFolder', details: 'response: ' + objResp.code + ' ' + objResp.body});
 
@@ -52,8 +62,12 @@ function(https,suiteBoxMain) {
 					return objFolder;
 				}
 				else{
-					return {status: 'failed',
-						message: objResp.code  + ':' + objResp.body};
+					return {
+						status: 'failed',
+						message: objResp.code  + ':' + objResp.body,
+						code:objResp.code,
+						json:objResp.body
+					};
 				}
 			}
 		}
@@ -163,7 +177,7 @@ function(https,suiteBoxMain) {
 	
 	
     return {
-    	create: create,
+    		create: create,
         update: update,
         items: items
     };

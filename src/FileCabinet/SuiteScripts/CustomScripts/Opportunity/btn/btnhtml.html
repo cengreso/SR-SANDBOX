@@ -1,0 +1,21 @@
+<script type="text/javascript">
+
+function popUpload(){
+	nlExtOpenWindow('{surl1}', 'upload_estimate', 600, 400, null, false, 'Upload Estimate JSON', null);
+	$( '.x-tool' ).click(function() { location.reload();});
+}
+function popTask(){
+	nlExtOpenWindow('{surl2}', 'create_task', 600, 400, null, false, 'Closing Plan', null);
+	$( '.x-tool' ).click(function() { location.reload();});
+}
+
+function popMargin(){
+	nlExtOpenWindow('{surl3}', 'update_margin', 600, 400, null, false, 'Update Margin', null);
+	$( '.x-tool' ).click(function() { location.reload();});
+}
+
+function openHubspot(){
+	window.open("https://app.hubspot.com/contacts/296336/deals/{hsid}", "_blank");
+}
+
+</script>
