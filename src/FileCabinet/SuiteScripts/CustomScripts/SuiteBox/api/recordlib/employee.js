@@ -1,32 +1,33 @@
 /**
  * @NApiVersion 2.x
  */
-define(['N/search', 'N/runtime', '../lib/folder.js'],
+define(['N/search', 'N/runtime', '../lib/folder.js', 'N/file','N/query', '../lib/collab'],
 
-	function (search, runtime, folder) {
+	function (search, runtime, folder, file, query, collab) {
+		log.debug('employee.js');
+
 		onboardEmployeeFolder = function (options) {
 			try {
-				// log.debug('folder', folder)
 				var scriptObj = runtime.getCurrentScript();
 				var stRecId = options.id;
 				var strecType = options.type;
 				var retMe = {}
 
-				var employee = search.lookupFields({
-					type: strecType,
-					id: stRecId,
-					columns: ['subsidiary', 'entityid', 'internalid', 'firstname', 'lastname']
-				});
+				var sSql = file.load({
+					id: 309848 // SuiteBox/api/recordlib/sql/employee.sql
+				}).getContents();
 
-				var stSubsidiary = employee.subsidiary[0].value;
-				var stInternalid = employee.internalid[0].value;
+				var objEmployee = query.runSuiteQL({
+					query: sSql,
+					params: [stRecId]
+				}).asMappedResults()[0];
+				log.debug('objEmployee', objEmployee);
 
-				var stEmployeeFolder = stInternalid + ' - ' + employee.firstname + ', ' + employee.lastname;
+				var stSubsidiary = objEmployee.subsidiary;
+				var stInternalid = objEmployee.id;
+
+				var stEmployeeFolder = stInternalid + ' - ' + objEmployee.firstname + ', ' + objEmployee.lastname;
 				var arrEmpSubFolder = ['onboarding', 'allowance', 'salaryadjustments', 'Variable Compensation', 'Offboarding', 'Others']
-
-
-				log.debug('arrEmpSubFolder', arrEmpSubFolder);
-				log.debug('stSubsidiary',stSubsidiary);
 
 				var options = {
 					objFolder: {
@@ -39,12 +40,13 @@ define(['N/search', 'N/runtime', '../lib/folder.js'],
 					},
 				};
 
-				log.debug('folder', folder)
 				var objParentFolder = folder.create(options);
 
-				log.debug({title:'objParentFolder',details:objParentFolder});
+				log.debug({
+					title: "Employee Parent Folder",
+					details: objParentFolder
+				});
 				var stParentId = useExistingFolderid(objParentFolder);// accepts Box's callback to re-align error
-
 
 				if (!!stParentId)
 					for (var stSubFolderCTR = 0; stSubFolderCTR < arrEmpSubFolder.length; stSubFolderCTR++) {
@@ -52,24 +54,21 @@ define(['N/search', 'N/runtime', '../lib/folder.js'],
 							name: arrEmpSubFolder[stSubFolderCTR],
 							parent: parseInt(stParentId),
 						}
-						folder.create(options);
+						var subFolder = folder.create(options);
+						log.audit({
+							title: "Employee subFolder",
+							details: subFolder
+						});
 					}
 				retMe = {
 					response:'successful',
 					message: 'employee folders created',
 				}
 
-				log.debug({
+				log.audit({
 					title: "Remaining usage units: ",
 					details: scriptObj.getRemainingUsage()
 				});
-				return retMe
-
-				log.debug('e',e)
-				retMe = {
-					response:'failed',
-					message:'failed in creating Folder'
-				}
 				return retMe
 
 			} catch (e) {
@@ -77,9 +76,44 @@ define(['N/search', 'N/runtime', '../lib/folder.js'],
 					response:'failed',
 					message:'failed in creating Folder',
 					err: e
-				}
-				log.error({title: 'Error on: Employee library', details: retMe})
+				};
+				log.debug({title: 'Error on: Employee library', details: retMe});
 				return retMe
+			}
+		};
+		addCollab = function (options){
+			// { Single Collaborations
+			// 	type: 'folder', // folder
+			// 		id: folderId, // target folder id
+			// 	userid: 30912392949, // OR userid: '53397',email: emailSalesRep,
+			// 	role: 'co-owner',
+			// 	usertype: 'group',
+			// 	recType:'employee'
+			// }
+			return collab.addCollab(options)
+		};
+
+		addCollabs = function (arrOptions) {
+			try{
+				//{ // Multiple Collaborations based on Subsidary
+				//	subsidiary:17,
+				//	recType: "employee",
+				//	collabs: true,
+				//	folderId: 169990947918
+				//}
+
+				var collaborators = getCollabBySubsidiary(arrOptions);
+
+				log.debug('collaborators',collaborators);
+
+				for (var optionCTR = 0; optionCTR < collaborators.length; optionCTR++) 	{
+					collaborators[optionCTR].id = arrOptions.folderId
+					collaborators[optionCTR].type = arrOptions.type
+					collab.addCollab(collaborators[optionCTR]);
+				}
+
+			}catch (e) {
+				log.debug('arrOptions', e);
 			}
 		};
 
@@ -100,7 +134,7 @@ define(['N/search', 'N/runtime', '../lib/folder.js'],
 				'8':162851997859,	//El Salvador
 				'2':1353693716, //United Kingdom
 				'12':25586471718,	//Singapore
-				'17':169776175563,	//Philippines actual = 159761928514, demo = 169776175563
+				'17':169776175563,	//Philippines actual = 159761928514, demo = 169776175563, prod Test = 171045313346
 				'10':8206811153,	//Malaysia
 				'15':127215681988,	//india
 				'5':1106562906,	//chile
@@ -113,9 +147,24 @@ define(['N/search', 'N/runtime', '../lib/folder.js'],
 			}
 			return objSubsidiaryMap[stSubsidiary]
 		}
+		var getCollabBySubsidiary = function (options) {
+
+			var sSql = file.load({
+				id: 310049 // SuiteBox/api/recordlib/sql/collaborators.sql
+			}).getContents();
+
+			var arrSubsidiary = query.runSuiteQL({
+				query: sSql,
+				params: [options.subsidiary]
+			}).asMappedResults()
+			log.debug('arrSubsidiary',arrSubsidiary)
+			return arrSubsidiary
+		}
 
 		return {
 			onboardEmployeeFolder: onboardEmployeeFolder,
+			addCollab:addCollab,
+			addCollabs:addCollabs
 		}
 
 	});

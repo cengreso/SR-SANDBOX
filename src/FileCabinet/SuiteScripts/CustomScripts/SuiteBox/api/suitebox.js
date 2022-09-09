@@ -63,46 +63,56 @@ function(https, record, search, email, query, folder, boxfile, sign, employeelib
 	};
 	createFolder2 = function(options) {
 		try{
-		if(options.type == "employee" && options.suiteboxtype == 'onboarding'){
-			return employeelib.onboardEmployeeFolder(options)
-		}
+			if(options.type == "employee" && options.suiteboxtype == 'onboarding'){
+				return employeelib.onboardEmployeeFolder(options)
+			}
 		}catch(e){
 			log.debug('error on createFolder2', e)
 		}
 	};
-	addCollab = function(objCollab, recType) {
-		
+	addCollab2 = function(options) {
 		try{
-				
+			if (options.recType == "employee" && !options.collabs)
+				return employeelib.addCollab(options)
+			else if (!!options.collabs)
+				return employeelib.addCollabs(options)
+		} catch(e) {
+			log.debug('addCollab2',e)
+		}
+	};
+	addCollab = function(objCollab, recType) {
+
+		try{
+
 			var objSuiteBox = getSuiteBoxConfig(recType);
-			
+
 			var objAccessibleBy = {type : objCollab.usertype};
-			
+
 			log.audit({title: 'suitebox.addCollab', details: 'objCollab: ' + JSON.stringify(objCollab)});
-			
+
 			if(objCollab.email != undefined){
 				objAccessibleBy.login = objCollab.email;
 			}
 			else if(objCollab.userid != undefined){
 				objAccessibleBy.id = objCollab.userid;
 			}
-			
+
 			var objPayload = {	item: {	type: objCollab.type,
 										id: objCollab.id},
 								accessible_by: objAccessibleBy,
 								role: objCollab.role};
-						
-			var objHeader = {	'Content-Type': 'application/json', 
-								'Authorization': 'Bearer ' + objSuiteBox.accesstoken}; 
-			
+
+			var objHeader = {	'Content-Type': 'application/json',
+								'Authorization': 'Bearer ' + objSuiteBox.accesstoken};
+
 			log.audit({title: 'suitebox.addCollab', details: 'request: ' + JSON.stringify(objPayload)});
-			
+
 			var objResp = https.post({url: 'https://api.box.com/2.0/collaborations', body: JSON.stringify(objPayload), headers: objHeader});
-			
+
 			log.audit({title: 'suitebox.addCollab', details: 'response: ' + objResp.code + ' ' + objResp.body});
-			
+
 			if (objResp.code == 201) {
-				
+
 				var objFolder = JSON.parse(objResp.body);
 					objFolder.status = 'success';
 				return objFolder;
@@ -110,12 +120,12 @@ function(https, record, search, email, query, folder, boxfile, sign, employeelib
 			else{
 				return {status: 'failed',
 						message: objResp.code  + ':' + objResp.body};
-			}			
+			}
 		}
 		catch (err){
 			return {status: 'failed',
 					message: 'ERROR: ' + err};
-		}		
+		}
 	};
 	
 	getSuiteBoxConfig = function(recType){
@@ -323,6 +333,7 @@ function(https, record, search, email, query, folder, boxfile, sign, employeelib
     	createFolder: createFolder,
 			createFolder2:createFolder2,
     	addCollab: addCollab,
+			addCollab2:addCollab2,
     	emailUpload: emailUpload,
     	getFolderRecord: getFolderRecord,
     	createFolderRecord: createFolderRecord,
