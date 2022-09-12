@@ -79,7 +79,8 @@ function(file, serverWidget) {
      * @Since 2015.2
      */
     function afterSubmit(scriptContext) {
-
+			var objNewrecord = scriptContext.newRecord;
+			var arrFields = ['']
     }
 
     return {
