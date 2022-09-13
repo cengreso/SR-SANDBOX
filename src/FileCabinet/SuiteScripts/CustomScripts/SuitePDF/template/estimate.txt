@@ -1,0 +1,501 @@
+<pdf>
+    <head>
+    <link name="NotoSans" type="font" subtype="truetype" src="${font_notosans_regular?html}" src-bold="${font_notosans_bold?html}" src-italic="${nsfont.NotoSans_Italic}" src-bolditalic="${nsfont.NotoSans_BoldItalic}" bytes="2" />
+    
+<macrolist>
+    <macro id="nlheader">
+        <!--HEADER-->
+        <table style="width:100%; background-color: #221F1F;">
+            <tr width="100%">
+                <td  width="50%" style="padding-left: 0.4in; padding-top: 10px; padding-bottom: 10px;"><img src="https://3688201.app.netsuite.com/core/media/media.nl?id=63646&amp;c=3688201&amp;h=cc450deee8b4151f2fd5&amp;fcts=20200601062629&amp;whence=" width="80px" height="57px"/></td>
+                <td  width="50%" style="padding-right: 0.4in; padding-top: 15px; padding-bottom: 10px; ;" >
+                    <table style="color: white; width: 100%; ">
+                        <tr>
+                            <td align="right" style="font-size : 24px; font-weight:500;" >
+                                Quote
+                            </td>
+                        </tr>
+                        <tr  style="padding-top: -10px;">
+                            <td align="right" style="font-size : 20px;">
+                                ABN 30-0573197
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <!--END HEADER-->
+    </macro>
+    <macro id="nlfooter">
+        <!--FOOTER-->
+        <hr style="margin-left: 0.4in; margin-right: 0.4in;  margin-top: -10px"/>
+        <table style="width:100%; margin-left: 0.4in; margin-right: 0.4in; margin-top: -10px">
+            <tr width="100%" >
+                <td width="55%" style="vertical-align: bottom; color: #AAAAAA;">
+                    <table width="100%">
+                        <tr style="padding-top: 10px;">
+                            <td  width="30" style="text-align: left">
+                                Your ServiceRocket Contact <br/>
+                                Samantha  Snazel<br/>
+                                Enterprise Licensing Team <br/>
+                                sales@servicerocket.com
+                            </td>
+                            <td width="35" style="text-align: left; color: #AAAAAA;">
+                                <strong> ServiceRocket Inc.</strong> <br/>
+                                2741 Middlefield Road, Suite 200 Palo Alto, CA,<br/>94306 United States<br/>Phone/Fax: +1 888 707-0088<br/>www.servicerocket.com
+                            </td>
+                            <td width="35"  align="right">
+                                www.servicerocket.com <br/>
+                                #WeGotYourBack
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+            </tr>
+        </table>
+        <!--FOOTER-->
+    </macro>
+</macrolist>
+<style type="text/css">* {
+    font-family: NotoSans, Arial,sans-serif;
+}
+
+body {
+    font-family: 'Arial';
+}
+
+table {
+    font-size: 9pt;
+    table-layout: fixed;
+    padding: 3px;
+}
+
+table.footer td {
+    padding: 0px;
+    font-size: 8pt;
+}
+table.body td {
+    padding-top: 2px;
+}
+table.total {
+    page-break-inside: avoid;
+}
+tr.totalrow {
+    background-color: #e3e3e3;
+    line-height: 200%;
+}
+td.totalboxtop {
+    font-size: 12pt;
+    background-color: #e3e3e3;
+}
+td.addressheader {
+    font-size: 8pt;
+    padding-top: 6px;
+    padding-bottom: 2px;
+}
+td.address {
+    padding-top: 0px;
+}
+td.totalboxmid {
+    font-size: 28pt;
+    padding-top: 20px;
+    background-color: #e3e3e3;
+}
+td.totalboxbot {
+    background-color: #e3e3e3;
+    font-weight: bold;
+}
+
+td.summarybox {
+    font-size: 12pt;
+    text-indent: 2px;
+}
+
+td.label {
+    font-weight: bold;
+    font-size: 12pt;
+    text-indent: 2px;
+}
+
+td.summaryboldbox {
+    font-weight: bold;
+    font-size: 12pt;
+    text-indent: 0.5px;
+}
+
+td.paymentbox {
+    font-size:10pt;
+    text-indent: 2px;
+}
+
+td.paymentboldbox {
+    font-weight: bold;
+    font-size: 10pt;
+    text-indent: 2px;
+}
+
+span.title {
+    font-size: 28pt;
+}
+span.number {
+    font-size: 16pt;
+}
+span.itemname {
+    font-weight: bold;
+    line-height: 150%;
+}
+hr {
+    width: 100%;
+    color: #d3d3d3;
+    background-color: #d3d3d3;
+    height: 1px;
+}
+</style>
+</head>
+<body header="nlheader" header-height="10%" footer="nlfooter" footer-height="7%" padding="0.in 0.0in 0.5in 0.0in" size="A4">
+
+<!--Account Infor-->
+<table style="width:100%; margin-left: 0.4in; margin-right: 0.4in; padding-top: 0.5in; ">
+    <tr style="width: 100%;">
+        <!--Attention-->
+        <td style="width: 55%;" >
+            <table>
+                <tr>
+                    <td class="summarybox">
+                        <span><strong>Bill To </strong>  </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>Machine Zone, Inc.<br />1050 Page Mill Road<br />Palo Alto CA 94306<br />United States</span>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <!--Summary-->
+        <td style="width:45%;" >
+            <table width="100%" style="background-color: #F5F5F5; font-size:24px; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 10px;">
+                <tr>
+                    <td>
+                        <table style="padding-bottom: -10px;">
+                            <tr style="padding-top: 5px;">
+                                <td class="summaryboldbox"><strong>Summary</strong></td>
+                            </tr>
+                        </table>
+                        <hr/>
+                        <table width ="100%" style="padding-top: -10px; padding-bottom: -10px;">
+                            <tr>
+                                <td class="summarybox"> <strong>Total</strong> </td>
+                                <td class="summaryboldbox" align="left">121,555.00</td>
+                            </tr>
+                            <tr>
+                                <td class="summarybox">Due Date </td>
+                                <td class="summaryboldbox" align="left">2020-11-27</td>
+                            </tr>
+                        </table>
+                        <hr/>
+                        <table  width ="100%" style="padding-top: -10px; padding-bottom: -10px;">
+                            <tr>
+                                <td class="summarybox" >Quote Number </td>
+                                <td class="summaryboldbox" align="left">SRQ-010058</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+</table>
+<!-- End Account Infor-->
+
+<hr style="margin-left: 0.4in; margin-right: 0.4in; "/>
+<table style="width:100%; margin-left: 0.4in; margin-right: 0.4in; ">
+    <tr width="100%" >
+        <td width="55%" style="vertical-align: top; text-align: left;">
+            <table width="100%" align="left">
+                <tr>
+                    <td class="summarybox"></td>
+                </tr>
+                <tr>
+                    <td class="summaryboldbox">ServiceRocket Inc.</td>
+                </tr>
+                <tr>
+                    <td style="white-space: pre; padding-left: 5px; font-size: 10px;">
+                        2741 Middlefield Road, Suite 200 Palo Alto, CA,<br/>94306 United States<br/>Phone/Fax: +1 888 707-0088<br/>www.servicerocket.com
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td width="45%" style="vertical-align: bottom;">
+            <table width="100%">
+                <tr>
+                    <td class="summaryboldbox" >Payment Method </td>
+                </tr>
+                <tr rowspan="2">
+                    <td class="label" >Bank Transfer </td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <td style="font-size: 10px;">
+                        <span></span>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<!--Details-->
+
+<hr style="margin-left: 0.4in; margin-right: 0.4in; "/>
+<!--Details-->
+<p style="margin-left: 0.5in; font-weight: bold; font-size: 14pt; text-align: justify">Details</p>
+
+<table style="width: 100%; margin-top: 10px; margin-left: 0.4in; margin-right: 0.4in; font-size: 9pt; border-collapse: collapse; line-height: 150%;">
+    <!-- start items -->
+<thead>
+	<tr style="background-color: #F5F5F5; color: #AAAAAA; font-weight: bold;">
+		<th width="40%">Description</th>
+		<th align="right" width="10%">Qty</th>
+		<th align="right" width="13%">Sales Price</th>
+		<th align="right" width="12%">Discount</th>
+		<th align="right" width="15%" style="white-space: nowrap">Total</th>
+	</tr>
+</thead>
+<tbody>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">Lucidchart Diagrams OnPrem - Confluence Data Center for Confluence (Data Center) 1000 Users: Commercial Term License. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">3,525.00</td>
+		<td align="right"></td>
+		<td align="right">3,525.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">Jira Software (Data Center) 1000 Users: Commercial Term License Downgrade from 2000 Users. Support Entitlement: SEN-7717539. Licensed To: Machine Zone, Inc.. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">35,345.00</td>
+		<td align="right">9,405.00</td>
+		<td align="right">25,940.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">Confluence (Data Center) 1000 Users: Commercial Term License Downgrade from 2000 Users. Support Entitlement: SEN-7717540. Licensed To: Machine Zone, Inc.. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">35,345.00</td>
+		<td align="right">9,405.00</td>
+		<td align="right">25,940.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">External Hooks by Reconquest Data Center for Bitbucket (Data Center) 500 Users: Commercial Term License Downgrade from 1000 Users. Support Entitlement: SEN-14360461. Licensed To: Machine Zone, Inc. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">1,295.00</td>
+		<td align="right">355.00</td>
+		<td align="right">940.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">Jira Workflow Toolbox Data Center for Jira Software (Data Center) 1000 Users: Commercial Term License. Licensed To: Machine Zone, Inc.. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">2,355.00</td>
+		<td align="right"></td>
+		<td align="right">2,355.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">JSU Automation Suite for Jira Workflows Data Center for Jira Software (Data Center) 1000 Users: Commercial Term License. Licensed To: Machine Zone, Inc.. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">2,240.00</td>
+		<td align="right"></td>
+		<td align="right">2,240.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">Show Saved Filter with Columns for Jira for JIRA (Server) 2000 Users: Commercial License Renewal. Support Entitlement: SEN-7385104. Licensed To: Machine Zone, Inc.. Support Period: null Months</p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">300.00</td>
+		<td align="right"></td>
+		<td align="right">300.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">Atlassian Priority Support (Data Center) - Annual Term Renewal. Support Entitlement: SEN-12862950. Licensed To: Machine Zone, Inc.. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">5,055.00</td>
+		<td align="right"></td>
+		<td align="right">5,055.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">ScriptRunner for Bitbucket Data Center for Bitbucket (Data Center) 500 Users: Commercial Term License. Licensed To: Machine Zone, Inc.. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">2,830.00</td>
+		<td align="right"></td>
+		<td align="right">2,830.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">Workzone: PullRequest Workflow Data Center for Bitbucket (Data Center) 500 Users: Commercial Term License. Licensed To: Machine Zone, Inc.. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">2,945.00</td>
+		<td align="right"></td>
+		<td align="right">2,945.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">Copy Page Tree Data Center for Confluence (Data Center) 1000 Users: Commercial Term License. Licensed To: Machine Zone, Inc.. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">590.00</td>
+		<td align="right"></td>
+		<td align="right">590.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">Navitabs - Tabs for Confluence Data Center for Confluence (Data Center) 1000 Users: Commercial Term License. Licensed To: Machine Zone, Inc.. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">1,000.00</td>
+		<td align="right"></td>
+		<td align="right">1,000.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">Refined for Confluence | Sites &amp; Themes Data Center for Confluence (Data Center) 1000 Users: Commercial Term License. Licensed To: Machine Zone, Inc.. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">10,605.00</td>
+		<td align="right"></td>
+		<td align="right">10,605.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">ScriptRunner for Jira Data Center for Jira Software (Data Center) 1000 Users: Commercial Term License. Licensed To: Machine Zone, Inc.. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">3,535.00</td>
+		<td align="right"></td>
+		<td align="right">3,535.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">Create on Transition for Jira Data Center for Jira Software (Data Center) 1000 Users: Commercial Term License. Licensed To: Machine Zone, Inc.. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">2,970.00</td>
+		<td align="right"></td>
+		<td align="right">2,970.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">eazyBI Reports and Charts for Jira Data Center for Jira Software (Data Center) 1000 Users: Commercial Term License. Licensed To: Machine Zone, Inc.. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">4,715.00</td>
+		<td align="right"></td>
+		<td align="right">4,715.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">Jira Misc Workflow Extensions (JMWE) Data Center for Jira Software (Data Center) 1000 Users: Commercial Term License. Licensed To: Machine Zone, Inc.. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">2,575.00</td>
+		<td align="right"></td>
+		<td align="right">2,575.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">Multi-Level Cascading Select Data Center for Jira Software (Data Center) 1000 Users: Commercial Term License. Licensed To: Machine Zone, Inc.. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">885.00</td>
+		<td align="right"></td>
+		<td align="right">885.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">Bitbucket (Data Center) 500 Users: Commercial Term License Renewal. Support Entitlement: SEN-7506224. Licensed To: Machine Zone, Inc.. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">17,600.00</td>
+		<td align="right"></td>
+		<td align="right">17,600.00</td>
+	</tr>
+	
+    <tr style="margin-top: 0.6in">
+		<td><p style="text-align: left">Atlassian Priority Support (Data Center) - Annual Term Renewal. Support Entitlement: SEN-12874754. Licensed To: Machine Zone, Inc.. </p></td>
+		
+		<td align="right">1.0</td>
+		<td align="right">5,000.00</td>
+		<td align="right"></td>
+		<td align="right">5,000.00</td>
+	</tr>
+      
+<tr style="background-color: #F5F5F5; color: #AAAAAA; font-weight: bold; height: 3px;"><td></td></tr>
+</tbody>
+</table>
+
+<!--Item Total-->
+<table style="width:100%; margin-left: 0.4in; margin-right: 0.4in;">
+    <tr width="100%">
+        <td width="55%"></td>
+        <td width="45%">
+            <!---Sub Total-->
+            <table width="100%" style="padding-bottom: -10px;">
+                <tr>
+                    <td class="summarybox" >Number of items </td>
+                    <td class="summarybox" align="left"></td>
+                </tr>
+                <tr>
+                    <td class="summarybox" >Sub-total </td>
+                    <td class="summarybox" align="left">121,545.00</td>
+                </tr>
+                <tr>
+                    <td class="summarybox" >Discount </td>
+                    <td class="summarybox" align="left">10.00</td>
+                </tr>
+            </table>
+            <hr/>
+            <table width="100%" style="padding-top: -10px;">
+                <tr>
+                    <td class="summaryboldbox" >Total  </td>
+                    <td class="summaryboldbox" align="left">121,555.00</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<!--Selection Item-->
+<br/>
+<table style="width:100%; margin-left: 0.4in; margin-right: 0.4in;">
+    <tr width="100%">
+        <td >
+            <p style="text-align: left">
+                If you are purchasing a license (which also includes support services for the first year) or obtaining a renewal of your license support,
+                license keys shall be shipped upon receipt of payment. In the event, you are purchasing any license(s) or support services (including renewal) the terms and conditions of such are set forth in 
+                the respective vendor End User License Agreement. You hereby agree to such terms and conditions. <br/>
+                End User License Agreement(s): <br/>
+                https://www.atlassian.com/legal/customer-agreement <br/>
+                https://www.atlassian.com/legal/privacy-policy <br/>
+                https://www.atlassian.com/licensing/marketplace/termsofuse
+            </p>
+        </td>
+    </tr>
+</table>
+</body>
+</pdf>

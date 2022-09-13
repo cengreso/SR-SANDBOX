@@ -1,0 +1,311 @@
+<pdf>
+   <head>
+      <link name="NotoSans" type="font" subtype="truetype" src="${font_notosans_regular?html}" src-bold="${font_notosans_bold?html}" src-italic="${nsfont.NotoSans_Italic}" src-bolditalic="${nsfont.NotoSans_BoldItalic}" bytes="2" />
+      <macrolist>
+         <macro id="nlheader">
+            <!--HEADER-->
+            <table style="width:100%; background-color: #221F1F;">
+               <tr width="100%">
+                  <td  width="50%" style="padding-left: 0.4in; padding-top: 10px; padding-bottom: 10px;"><img src="https://3688201.app.netsuite.com/core/media/media.nl?id=63646&amp;c=3688201&amp;h=cc450deee8b4151f2fd5&amp;fcts=20200601062629&amp;whence=" width="80px" height="57px"/></td>
+                  <td  width="50%" style="padding-right: 0.4in; padding-top: 15px; padding-bottom: 10px; ;" >
+                     <table style="color: white; width: 100%; ">
+                        <tr>
+                           <td align="right" style="font-size : 24px; font-weight:500;" >
+                              Quote
+                           </td>
+                        </tr>
+                        <tr>
+                           <td align="right" style="font-size : 12px;">
+                              {{federalidnumber}}
+                           </td>
+                        </tr>
+                     </table>
+                  </td>
+               </tr>
+            </table>
+            <!--END HEADER-->
+         </macro>
+         <macro id="nlfooter">
+            <!--FOOTER-->
+            <hr style="margin-left: 0.4in; margin-right: 0.4in;  margin-top: -10px"/>
+            <table style="width:100%; margin-left: 0.4in; margin-right: 0.4in; margin-top: -10px">
+               <tr width="100%" >
+                  <td width="55%" style="vertical-align: bottom; color: #AAAAAA;">
+                     <table width="100%">
+                        <tr style="padding-top: 10px;">
+                           <td  width="30" style="text-align: left">
+                              Your ServiceRocket Contact <br/>
+                              {{salesrep}}<br/>
+                              Enterprise Licensing Team <br/>
+                              sales@servicerocket.com
+                           </td>
+                           <td width="35" style="text-align: left; color: #AAAAAA;">
+                              <strong> {{subsidiary}}</strong> <br/>
+                              {{{custrecord_sr_address}}}
+                           </td>
+                           <td width="35"  align="right">
+                              www.servicerocket.com <br/>
+                              #WeGotYourBack
+                           </td>
+                        </tr>
+                     </table>
+                  </td>
+               </tr>
+            </table>
+            <!--FOOTER-->
+         </macro>
+      </macrolist>
+      <style type="text/css">
+         * 
+         {
+         font-family: NotoSans, Arial,sans-serif;
+         }
+         body {
+         font-family: 'Arial';
+         }
+         table {
+         font-size: 9pt;
+         table-layout: fixed;
+         padding: 3px;
+         }
+         table.body td {
+         padding-top: 2px;
+         }
+         td.summarybox {
+         font-size: 12pt;
+         text-indent: 2px;
+         }
+         td.summaryboldbox {
+         font-weight: bold;
+         font-size: 12pt;
+         text-indent: 0.5px;
+         }
+         hr {
+         width: 100%;
+         color: #d3d3d3;
+         background-color: #d3d3d3;
+         height: 1px;
+         }
+         .itemtable {
+         width: 100%; 
+         margin-top: 10px; 
+         margin-left: 0.4in; 
+         margin-right: 0.4in; 
+         font-size: 9pt;
+         table-layout: fixed;
+         }
+         .itemtable tr{
+         padding: 5px;
+         }
+      </style>
+   </head>
+   <body header="nlheader" header-height="10%" footer="nlfooter" footer-height="7%" padding="0.in 0.0in 0.5in 0.0in" size="A4">
+      <table style="width:100%; margin-left: 0.4in; margin-right: 0.4in; padding-top: 0.2in; ">
+         <tr style="width: 100%;">
+            <td style="width: 50%;" >
+               <table>
+                  <tr>
+                     <td class="summarybox">
+                        <span><strong>Bill To </strong></span>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <span>{{primarycontact}}</span> <br/>
+                        <span>{{{billingaddress}}}</span>
+                     </td>
+                  </tr>
+               </table>
+            </td>
+            <td style="width:50%;" >
+               <table width="100%" style="background-color: #F5F5F5; font-size:24px; padding-left: 15px; padding-right: 15px; padding-top: 5px; padding-bottom: 10px;">
+                  <tr>
+                     <td>
+                        <table style="padding-bottom: -10px;">
+                           <tr style="padding-top: 5px;">
+                              <td class="summaryboldbox"><strong>Summary</strong></td>
+                           </tr>
+                        </table>
+                        <hr/>
+                        <table width ="100%" style="padding-top: -10px; padding-bottom: -10px;">
+                           <tr>
+                              <td class="summarybox"> <strong>Total</strong> </td>
+                              <td class="summaryboldbox" align="left">{{currencysymbol}} {{total}}</td>
+                           </tr>
+                           <tr>
+                              <td class="summarybox">Due Date </td>
+                              <td class="summaryboldbox" align="left">{{duedate}}</td>
+                           </tr>
+                        </table>
+                        <hr/>
+                        <table  width ="100%" style="padding-top: -10px; padding-bottom: -10px;">
+                           <tr>
+                              <td class="summarybox" >Quote Number </td>
+                              <td class="summaryboldbox" align="left">{{tranid}}</td>
+                           </tr>
+                        </table>
+                     </td>
+                  </tr>
+               </table>
+            </td>
+         </tr>
+      </table>
+      <!-- End Account Infor-->
+      <hr style="margin-left: 0.4in; margin-right: 0.4in; "/>
+      <table style="width:100%; margin-left: 0.4in; margin-right: 0.4in; ">
+         <tr width="100%" >
+            <td width="55%" style="vertical-align: top; text-align: left;">
+               <table width="100%" align="left">
+                  <tr>
+                     <td class="summarybox"></td>
+                  </tr>
+                  <tr>
+                     <td class="summaryboldbox">{{subsidiary}}</td>
+                  </tr>
+                  <tr>
+                     <td style="white-space: pre; padding-left: 5px; font-size: 10px;">
+                        {{{custrecord_sr_address}}}
+                     </td>
+                  </tr>
+               </table>
+            </td>
+            <td width="45%" style="vertical-align: bottom;">
+               <table width="100%">
+                  <tr>
+                     <td class="summaryboldbox" >Payment Method </td>
+                  </tr>
+                  <tr rowspan="2">
+                     <td class="summaryboldbox" >Bank Transfer </td>
+                  </tr>
+               </table>
+               <table>
+                  <tr>
+                     <td style="font-size: 10px;">
+                        <span>{{{paymentinstruction}}}</span>
+                     </td>
+                  </tr>
+               </table>
+            </td>
+         </tr>
+      </table>
+      <!--Details-->
+      <hr style="margin-left: 0.4in; margin-right: 0.4in; "/>
+      <!--Details-->
+      <p style="margin-left: 0.5in; font-weight: bold; font-size: 14pt; text-align: justify">Details</p>
+      <table class="itemtable">
+         <thead>
+            <tr style="background-color: #888888; color: #FFFFFF; font-weight: bold; padding: 5px">
+               {{#if custbody_nvy_hide_prodname}}
+               <th width="40%"> Description</th>
+               {{else}}
+               <th width="15%">Product</th>
+               <th width="55%">Description</th>
+               {{/if}}
+               <th align="right" width="10%">Qty</th>
+               <th align="right" width="13%">Sales Price</th>
+               {{#if @root.haslinediscount}}
+               <th align="right" width="20%">Discount</th>
+               {{else}}
+               {{/if}}
+               <th align="right" width="15%" style="white-space: nowrap">Total </th>
+            </tr>
+         </thead>
+         <tbody>
+            {{#item}}
+            {{#if displayonpdf}}
+            
+            <tr style="background-color: {{if_even @index}};" >
+               {{#if @root.custbody_nvy_hide_prodname}}
+               <td>
+                  <p style="text-align: left">{{description}}</p>
+               </td>
+               {{else}}
+               <td align="left">{{item}}</td>
+               <td>
+                  <p style="text-align: left">{{description}}</p>
+               </td>
+               {{/if}}
+               <td align="right">{{quantity}}</td>
+               <td align="right">{{rate}}</td>
+               {{#if @root.haslinediscount}}
+               <td align="right">
+               	<table padding= "0px">
+               		{{#discountdetail}}
+               		<tr padding= "0px">
+               			<td padding= "1px" align="right">{{{desctription}}}</td>
+               		</tr>
+               		<tr padding= "0px">
+               			<td padding= "1px" align="right">{{#replace "-" ""}}{{amount}}{{/replace}}</td>
+               		</tr>
+               		{{/discountdetail}}
+               	</table>
+               </td>  
+               {{else}}
+               {{/if}}
+               <td align="right">{{amount}}</td>
+            </tr>
+            {{else}}
+            {{/if}}
+            {{/item}}
+         </tbody>
+      </table>
+      <table style="width:100%; margin-left: 0.4in; margin-right: 0.4in;">
+         <tr width="100%">
+            <td width="45%"></td>
+            <td width="55%">
+               <!---Sub Total-->
+               <table width="100%" style="padding-bottom: -10px;">
+                  <tr>
+                     <td class="summarybox" >Number of items </td>
+                     <td class="summarybox" align="right">{{itemcount}} </td>
+                  </tr>
+                  <tr>
+                     <td class="summarybox" >Sub-total </td>
+                     <td class="summarybox" align="right">{{currencysymbol}} {{subtotal}}</td>
+                  </tr>
+                  {{#if hasupgradecredit}}
+                  <tr>
+                     <td class="summarybox" >Upgrade Credit</td>
+                     <td class="summarybox" align="right">{{currencysymbol}}  {{#replace "-" ""}} {{currency upgradecredit}} {{/replace}}</td>
+                  </tr>
+                  {{else}}
+                  {{/if}}
+                  {{#if hastax}}
+                  <tr>
+                     <td class="summarybox" >{{taxcode}} </td>
+                     <td class="summarybox" align="right">{{currencysymbol}} {{taxtotal}}</td>
+                  </tr>
+                  {{else}}
+                  {{/if}}
+               </table>
+               <hr/>
+               <table width="100%" style="padding-top: -10px;">
+                  <tr>
+                     <td class="summaryboldbox" >Total  </td>
+                     <td class="summaryboldbox" align="right">{{currencysymbol}} {{total}}</td>
+                  </tr>
+               </table>
+            </td>
+         </tr>
+      </table>
+      <!--Selection Item-->
+      <br/>
+      <table style="width:100%; margin-left: 0.4in; margin-right: 0.4in;">
+         <tr width="100%">
+            <td >
+               <p style="text-align: left">
+                  If you are purchasing a license (which also includes support services for the first year) or obtaining a renewal of your license support,
+                  license keys shall be shipped upon receipt of payment. In the event, you are purchasing any license(s) or support services (including renewal) the terms and conditions of such are set forth in 
+                  the respective vendor End User License Agreement. You hereby agree to such terms and conditions. <br/><br/>
+                                
+                  End User License Agreement(s): <br/>
+                  https://www.atlassian.com/legal/customer-agreement <br/>
+                  https://www.atlassian.com/legal/privacy-policy <br/>
+                  https://www.atlassian.com/licensing/marketplace/termsofuse<br/><br/>
+                  {{custbody_customterms}}
+               </p>
+            </td>
+         </tr>
+      </table>
+   </body>
+</pdf>

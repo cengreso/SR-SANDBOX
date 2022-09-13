@@ -1,0 +1,103 @@
+<pdf>
+<head>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"></link>
+	<style type="text/css">
+        *{
+        	font-family: NotoSans, Arial,sans-serif;
+        	font-size: 12px;
+        }
+         
+		table{
+			width:100%;
+			table-layout: fixed;
+			margin: 5px;
+		}
+		td {
+			white-space: normal;
+			border: 1px;
+			border-color: #cac8c6;
+			padding: 10px 5px 10px 10px;
+		}
+		.cornercell{
+			border: 1px;
+			border-left-color: white;
+			border-top-color: white;
+		}
+		
+		.headertop{
+			border-top: 2px;
+			border-top-color: #ffac07;
+		}
+		
+	    .headertitle{
+	  		font-weight: bold;
+	  		word-wrap: break-word;
+	  	}
+	  	.headersubtitle{
+	  		font-color: white;
+	  		word-wrap: break-word;
+	  	}
+	  	.numeric{
+	  		align:right;
+	  		vertical-align: bottom;
+	  	}
+	  	
+	  	.allowance{
+	  		font-size:26px;
+	  	}
+	  	
+	  </style>
+</head>
+<body>
+<h4>Tech Choice 2.0 Allowance Breakdowns</h4>
+	<table>
+		<tbody>
+			<tr>
+				<td class="cornercell">
+					
+				</td>
+				<td class="headertop">
+					<span class ="headertitle">LEVEL 1</span><br/>
+					<span class ="headersubtitle">
+					All Rocketeers
+					(Tech Choice/Non-Tech Choice)
+					</span>
+				</td>
+				<td class="headertop">
+					<span class ="headertitle">LEVEL 2</span><br/>
+					<span class ="headersubtitle">
+					Currently under Tech Choice
+					</span>
+				</td>
+				<td class="headertop">
+					<span class ="headertitle">LEVEL 3**</span><br/>
+					<span class ="headersubtitle">
+					For Engineers only (Engineering
+					department) who are under
+					Tech Choice
+					</span>
+				</td>
+			</tr>
+			
+			{{#each this}}
+			<tr style="background-color: {{if_even @index}};">
+				<td>
+					<span class ="headertitle" >{{subsidiary_grouped}}</span> <br/>
+					<span><i>As of {{effective_date}}</i></span><br/>
+					<span>{{currency_name}} ({{currency_code}})</span>
+				</td>
+				<td class="numeric">
+					<span class="allowance">{{{currency_symbol}}}{{currency level1}}</span>
+				</td>
+				<td class="numeric">
+					<span class="allowance">{{{currency_symbol}}}{{currency level2}}</span>
+				</td>
+				<td class="numeric">
+					<span class="allowance">{{{currency_symbol}}}{{currency level3}}</span>
+				</td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+</body>
+</pdf>
