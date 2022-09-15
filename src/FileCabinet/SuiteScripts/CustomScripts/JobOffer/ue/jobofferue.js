@@ -19,6 +19,7 @@ function(file, serverWidget) {
      * @param {Form} scriptContext.form - Current form
      * @Since 2015.2
      */
+
     function beforeLoad(scriptContext) {
 
 
@@ -78,22 +79,7 @@ function(file, serverWidget) {
      * @param {string} scriptContext.type - Trigger type
      * @Since 2015.2
      */
-		//NS : HS
-		GLOBAL_MAPPING = {
-			'custrecord_jo_fullname':'name',
-			'custrecord_jo_firstname':"first_name",
-			'custrecord_jo_lastname':'last_name',
-			'custrecord_jo_email':'email',
-			'custrecord_jo_title':'job_title',
-			'custrecord_jo_team':'division',
-			'custrecord_jo_team':'department',
-			'custrecord_jo_team':'cost_center',
-			'custrecord_jo_location':'office',
-			'custrecord_jo_expected_startdate':'custrecord_jo_expected_startdate',
-
-		}
     function afterSubmit(scriptContext) {
-			var objNewrecord = scriptContext.newRecord;
     }
 
     return {
