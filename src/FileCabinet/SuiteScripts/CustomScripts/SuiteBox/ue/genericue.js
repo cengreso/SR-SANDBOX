@@ -3,9 +3,9 @@
  * @NScriptType UserEventScript
  * @NModuleScope SameAccount
  */
-define(['N/record', '../api/suitebox', 'N/https'],
+define(['N/record', '../api/suitebox', 'N/https','N/runtime'],
 
-	function (record, suitebox, https) {
+	function (record, suitebox, https, runtime) {
 
 		/**
 		 * Function definition to be triggered before record is loaded.
@@ -18,11 +18,12 @@ define(['N/record', '../api/suitebox', 'N/https'],
 		 */
 		function beforeLoad(scriptContext) { // will be move to aftersubmit
 			var newRec = scriptContext.newRecord;
-			try {
-				// if (newRec.type == "employee")
-					suitebox.createFolder2({id: newRec.id, type: newRec.type, suiteboxtype:'onboarding'});
+			try {w
+				// if (newRec.id == 1060646)
+					// suitebox.createFolder2({id: newRec.id, type: newRec.type, suiteboxtype:'onboarding'});
 
-				var folderId = 169776175563
+				log.debug('BeforeLoad')
+				var folderId = 173991569274
 				// var objCollab = suitebox.addCollab2({
 				// 		type: 'folder', // folder
 				// 		id: folderId, // target folder id
@@ -36,7 +37,7 @@ define(['N/record', '../api/suitebox', 'N/https'],
 					recType:'employee',
 					collabs:true,
 					type:'folder',
-					folderId:folderId
+					folderId:folderId,
 				});
 				log.debug('objCollab',objCollab)
 
@@ -101,5 +102,3 @@ define(['N/record', '../api/suitebox', 'N/https'],
 		};
 
 	});
-
-

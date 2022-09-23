@@ -1,11 +1,12 @@
 /**
  * @NApiVersion 2.x
  */
-define(['N/search', 'N/runtime', '../lib/folder.js', 'N/file','N/query', '../lib/collab'],
+define(['N/search','N/record', 'N/runtime', '../lib/folder.js', 'N/file','N/query', '../lib/collab','../../../Helper/jsonmapns'],
 
-	function (search, runtime, folder, file, query, collab) {
+	function (search,record, runtime, folder, file, query, collab,jsonmapns) {
 		log.debug('employee.js');
 
+		var subsidiaryFolders = runtime.getCurrentScript().getParameter('custscriptjson_empfoldercreation_by_subs');
 		onboardEmployeeFolder = function (options) {
 			try {
 				var scriptObj = runtime.getCurrentScript();
@@ -23,6 +24,14 @@ define(['N/search', 'N/runtime', '../lib/folder.js', 'N/file','N/query', '../lib
 				}).asMappedResults()[0];
 				log.debug('objEmployee', objEmployee);
 
+				var recMapping = record.load({type:'customrecord_integration_mapping', id:134});
+				var jsonMap = JSON.parse(recMapping.getValue('custrecord_intmap_mapping'));
+				var subsidiary = jsonmapns.jsonGetValue({
+					mapping: jsonMap,
+					data: objEmployee,
+					key: 'subsidiary'
+				});
+				log.debug('subsidiary new update', subsidiary)
 				var stSubsidiary = objEmployee.subsidiary;
 				var stInternalid = objEmployee.id;
 
@@ -32,7 +41,7 @@ define(['N/search', 'N/runtime', '../lib/folder.js', 'N/file','N/query', '../lib
 				var options = {
 					objFolder: {
 						name: stEmployeeFolder,
-						parent: fnSubsidiaryMapping(stSubsidiary), // subsidiary folder id stSubsidiary will have a mapping
+						parent: subsidiary, // subsidiary folder id stSubsidiary will have a mapping
 					},
 					objRecord: {
 						record: strecType,
@@ -134,7 +143,7 @@ define(['N/search', 'N/runtime', '../lib/folder.js', 'N/file','N/query', '../lib
 				'8':162851997859,	//El Salvador
 				'2':1353693716, //United Kingdom
 				'12':25586471718,	//Singapore
-				'17':169776175563,	//Philippines actual = 159761928514, demo = 169776175563, prod Test = 171045313346
+				'17':159761928514,	//Philippines actual = 159761928514, demo = 169776175563, prod Test = 171045313346
 				'10':8206811153,	//Malaysia
 				'15':127215681988,	//india
 				'5':1106562906,	//chile
@@ -148,15 +157,24 @@ define(['N/search', 'N/runtime', '../lib/folder.js', 'N/file','N/query', '../lib
 			return objSubsidiaryMap[stSubsidiary]
 		}
 		var getCollabBySubsidiary = function (options) {
+			// var sSql = file.load({
+			// 	id: 310049 // SuiteBox/api/recordlib/sql/collaborators.sql
+			// }).getContents();
+			//
+			// var arrSubsidiary = query.runSuiteQL({
+			// 	query: sSql,
+			// 	params: [options.subsidiary]
+			// }).asMappedResults()
+			var arr = JSON.parse(runtime.getCurrentScript().getParameter('custscriptjson_collaborators_by_sub'));
+			var arrSubsidiary = [];
+			for (var arrCTR = 0; arrCTR < arr.length; arrCTR++) {
+				var arrSubs = arr[arrCTR].subsidiary.split(',');
+				for (var subCTR = 0; subCTR < arrSubs.length; subCTR++) {
+					if(arrSubs[subCTR] == options.subsidiary)
+						arrSubsidiary.push(arr[arrCTR]);
+				}
+			}
 
-			var sSql = file.load({
-				id: 310049 // SuiteBox/api/recordlib/sql/collaborators.sql
-			}).getContents();
-
-			var arrSubsidiary = query.runSuiteQL({
-				query: sSql,
-				params: [options.subsidiary]
-			}).asMappedResults()
 			log.debug('arrSubsidiary',arrSubsidiary)
 			return arrSubsidiary
 		}
@@ -170,14 +188,27 @@ define(['N/search', 'N/runtime', '../lib/folder.js', 'N/file','N/query', '../lib
 	});
 
 /*
-var objEmployeeFolders = {
-	subsidiary:{
-		Employee_Name:{
-			onboarding_folders:['onboarding', 'allowance', 'salaryadjustments', 'Variable Compensation', 'Offboarding', 'Others'],
-			otherSubFolder:{
-				otherSubSubFolder:['what will be the last directory for this subfolder']
-			}
-		}
-	}
+new
+{
+"type": "folder",
+"id": "folderId",
+"userid": "userid",
+"email": "email",
+"role": "role",
+"usertype": "usertype",
+"subsidiary":"subsidiary"
+}
+
+
+
+
+old
+{
+	type: 'folder',
+	id: folderId,
+	userid: 30912392949, // OR userid: '53397',email: emailSalesRep,
+	role: 'co-owner',
+	usertype: 'group',
+	recType:'employee'
 }
 */

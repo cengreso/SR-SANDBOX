@@ -1,6 +1,8 @@
-
-define(['N/https','N/search'],
-function(https,search){
+/**
+ * @NApiVersion 2.1
+ */
+define(['N/https','N/search','../../../Helper/jsonmapns','N/record', 'N/runtime'],
+function(https,search, jsonmapns,record, runtime){
 
 
 	/* ORIGINAL
@@ -26,16 +28,37 @@ function(https,search){
 	addCollab = function (options){ // options.objCollab, options.recType
 
 		try {
+
 			var objAccessibleBy = { type : options.usertype }
 
-			log.debug({title: 'suitebox.addCollab', details: 'options.objCollab: ' + JSON.stringify(options)});
+			log.debug({title: 'suitebox.addCollab', details: options});
 
 			if (options.email != undefined){
 				objAccessibleBy.login = options.objCollab.email;
+				// options.email = options.objCollab.email;
 			} else if (options.userid != undefined){
 				objAccessibleBy.id = options.userid;
 			}
 
+			var recMapping = record.load({type:'customrecord_integration_mapping',id:132});
+			var jsonMap = JSON.parse(recMapping.getValue('custrecord_intmap_mapping'));
+			log.debug('jsonMap',jsonMap)
+			log.debug('options',options)
+			var payload;
+
+			// for (const key of jsonMap) {
+			// 	log.debug(key)
+			// 	log.debug(jsonMap)
+			// }
+
+			for (var key = 0; key < Object.keys(jsonMap).length; key++) {
+				payload = jsonmapns.jsonGetValue({
+					mapping: jsonMap,
+					data: options,
+					key: Object.keys(jsonMap)[key]
+				});
+				log.debug('payload', payload)
+			}
 			var objPayload = {
 				item: {
 					type: options.type,
@@ -44,6 +67,7 @@ function(https,search){
 				accessible_by: objAccessibleBy,
 				role: options.role
 			};
+
 
 			log.debug({title: 'suitebox.addCollab', details: 'request: ' + JSON.stringify(objPayload)});
 			log.debug('objAccessibleBy', objPayload)
@@ -73,8 +97,7 @@ function(https,search){
 			}
 		}
 		catch (err){
-			return {status: 'failed',
-				message: 'ERROR: ' + err};
+			log.error('error', 'ERROR: ' + err);
 		}
 	}
 

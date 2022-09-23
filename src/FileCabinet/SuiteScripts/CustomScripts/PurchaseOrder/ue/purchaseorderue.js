@@ -22,23 +22,24 @@ define(['N/record', 'N/search', 'N/url', '../api/purchaseorder','N/ui/serverWidg
 					bills.push(tranID)
 				}
 				var currencycodes = getCurrencies();
-				var gst = gettotalGST({newRecord,currencycodes});
-				log.debug('gst',gst);
+				// var gst = gettotalGST({newRecord,currencycodes});
+				// log.debug('gst',gst);
 				//
 				var totalAmount = getConvertedTotalAmount({tranID,currencycodes,newRecord});
+				log.debug('totalAmount',totalAmount);
 				var poTotal = getPOtotal({currencycodes,newRecord});
-				var totalForeign = (poTotal.totalforeignPO + gst.totalGSTForeign) + parseFloat(totalAmount.foreignTotalPayment);
-				var totalUSD = (poTotal.totalUSDPO + gst.totalGSTUSD) + parseFloat(totalAmount.usdAmount);
+				log.debug('totalAmount.foreignTotalPayment',totalAmount.foreignTotalPayment)
+				log.debug('totalAmount.usdAmount',totalAmount.usdAmount)
+				var totalForeign = parseFloat(totalAmount.foreignTotalPayment) - poTotal.totalforeignPO ; // + gst.totalGSTForeign
+				var totalUSD = parseFloat(totalAmount.usdAmount) - poTotal.totalUSDPO; // + gst.totalGSTUSD
 				var scriptObj = runtime.getCurrentScript();
 				log.debug({
 					title: "Remaining usage units: ",
 					details: scriptObj.getRemainingUsage()
 				});
-				var total = totalForeign
-				// var total = totalUSD
 				log.debug('totalForeign',totalForeign)
 				log.debug('totalUSD',totalUSD)
-				newRecord.setValue({fieldId:'custbody3',value:total.toFixed(2)});
+				newRecord.setValue({fieldId:'custbody3',value:totalUSD.toFixed(2)});
 
 
 				//purchaseorder.updatePOExpiryDate(newRecord);
@@ -61,11 +62,13 @@ define(['N/record', 'N/search', 'N/url', '../api/purchaseorder','N/ui/serverWidg
 		function getPOtotal({currencycodes,newRecord}){
 			var currencycode = getCurrencySymbol({currencycodes, currencycode:newRecord.getText('currency') || 'USD'})
 			var rate = currency.exchangeRate({
-				source: 'USD',
-				target: currencycode,
+				source: currencycode,
+				target: 'USD',
 				date: newRecord.getValue('trandate')
 			});
-			return {totalUSDPO: parseFloat(newRecord.getValue('subtotal')) / rate, totalforeignPO: parseFloat(newRecord.getValue('subtotal'))}
+			log.debug('getPOtotal total', newRecord.getValue('total'))
+			log.debug('getPOtotal rate', rate +' - '+newRecord.getValue('trandate'))
+			return {totalUSDPO: parseFloat(newRecord.getValue('total')) * rate, totalforeignPO: parseFloat(newRecord.getValue('total'))}
 		}
 		function getCurrencies() {
 			var currencySearch = search.create({
@@ -82,42 +85,6 @@ define(['N/record', 'N/search', 'N/url', '../api/purchaseorder','N/ui/serverWidg
 			})
 			return currencycodes
 		}
-		function gettotalGST({newRecord,currencycodes}) {
-			var arrItem = []
-			var arrItemId = []
-			var ItemCount = newRecord.getLineCount({sublistId:'item'})
-			for (var ctr = 0; ctr < ItemCount; ctr++) {
-				arrItem.push({
-					gst:newRecord.getSublistValue({sublistId: 'item', fieldId: 'tax1amt', line: ctr}),
-					id:newRecord.getSublistValue({sublistId: 'item', fieldId: 'linkedorder', line: ctr})[0]
-				});
-				arrItemId.push(newRecord.getSublistValue({sublistId: 'item', fieldId: 'linkedorder', line: ctr}));
-			}
-			var currencycode = 'USD';
-			var sql = `SELECT createddate, id, BUILTIN.DF(custbody_req_currency) as currency, FROM Transaction WHERE Transaction.id IN (${arrItemId.toString()})`;
-			var ressql = query.runSuiteQL({
-				query: sql,
-			}).asMappedResults()
-			var totalGSTUSD = 0
-			var totalGSTForeign = 0
-			for (var resctr = 0; resctr < ressql.length; resctr++){
-				for (var arrItemCtr = 0; arrItemCtr < arrItem.length; arrItemCtr++) {
-					if(ressql[resctr].id == arrItem[arrItemCtr].id) {
-						arrItem[arrItemCtr]['createddate'] = ressql[resctr].createddate
-						currencycode = getCurrencySymbol({currencycodes, currencycode:ressql[resctr].currency}) || 'USD'
-						var rate = currency.exchangeRate({
-							source: currencycode,
-							target: 'USD',
-							// date: new Date(ressql[resctr].createddate),
-							date: new Date(newRecord.getValue('trandate'))
-						});
-						totalGSTUSD += arrItem[arrItemCtr].gst * rate
-						totalGSTForeign += arrItem[arrItemCtr].gst
-					}
-				}
-			}
-			return {totalGSTUSD, totalGSTForeign}
-		}
 		function getCurrencySymbol({currencycodes, currencycode}){
 			for (var i = 0; i < currencycodes.length; i++){
 				if(currencycodes[i].name == currencycode)
@@ -125,31 +92,36 @@ define(['N/record', 'N/search', 'N/url', '../api/purchaseorder','N/ui/serverWidg
 			}
 		}
 		function getConvertedTotalAmount({tranID,currencycodes}){
-			var vbsearch = search.create({
-				type: 'transaction',
-				filters:[
-					['createdFrom', 'anyof', tranID],
-					"AND",
-					["type","anyof","VendPymt"],
-				],
-				columns: ['createdFrom','trandate', 'internalid','type','currency','total','tranid']
-			});
+			var sSql = `SELECT 
+										trandate,
+										foreigntotal,
+										BUILTIN.DF(currency) as currency
+									FROM Transaction
+									WHERE ID IN (
+										SELECT TransactionLine.Transaction 
+										FROM TransactionLine 
+										WHERE ( TransactionLine.CreatedFrom = ${tranID.toString()})
+									)`;
+			log.debug('sql',sSql)
+			var arrvb = query.runSuiteQL({
+				query: sSql,
+			}).asMappedResults();
 			var currencycode = 'USD';
 			var usdAmount = 0;
 			var foreignTotalPayment = 0;
-			vbsearch.run().each((obj) => {
-				log.debug("obj.getValue('total')",obj.getValue('total'));
-				log.debug("obj.getValue('trandate')",obj.getValue('trandate'));
-				currencycode = getCurrencySymbol({currencycodes, currencycode:obj.getText('currency')});
+			log.debug('arrvb',arrvb)
+			for (var vbElement in arrvb) {
+				log.debug('vbElement', arrvb[vbElement])
+				currencycode = getCurrencySymbol({currencycodes, currencycode:arrvb[vbElement].currency});
 				var rate = currency.exchangeRate({
 					source: currencycode,
 					target: 'USD',
-					date: new Date(obj.getValue('trandate'))
+					date: new Date(arrvb[vbElement].trandate)
 				});
-				foreignTotalPayment += parseFloat(obj.getValue('total')) / rate;
-				usdAmount += parseFloat(obj.getValue('total'));
-				return true;
-			});
+				log.debug('rate',rate)
+				foreignTotalPayment += parseFloat(Math.abs(arrvb[vbElement].foreigntotal)) ;
+				usdAmount += parseFloat(Math.abs(arrvb[vbElement].foreigntotal))* rate;
+			}
 			return {
 				usdAmount:usdAmount,
 				foreignTotalPayment:foreignTotalPayment,
