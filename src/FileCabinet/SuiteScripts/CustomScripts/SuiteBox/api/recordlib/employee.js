@@ -136,26 +136,6 @@ define(['N/search','N/record', 'N/runtime', '../lib/folder.js', 'N/file','N/quer
 				stParentId = objParentFolder.id
 			return stParentId
 		}
-		var fnSubsidiaryMapping = function (stSubsidiary){
-			var objSubsidiaryMap = {
-				'1':217211964,	//United States
-				'4':217211964,	//United States
-				'8':162851997859,	//El Salvador
-				'2':1353693716, //United Kingdom
-				'12':25586471718,	//Singapore
-				'17':159761928514,	//Philippines actual = 159761928514, demo = 169776175563, prod Test = 171045313346
-				'10':8206811153,	//Malaysia
-				'15':127215681988,	//india
-				'5':1106562906,	//chile
-				'14':104978865295,	//Canada
-				'3':129086805626,  //australia
-				'9':129086805626,  //australia
-				'6':129086805626,  //australia
-				'11':129086805626,  //australia
-				'7':129086805626,  //australia
-			}
-			return objSubsidiaryMap[stSubsidiary]
-		}
 		var getCollabBySubsidiary = function (options) {
 			// var sSql = file.load({
 			// 	id: 310049 // SuiteBox/api/recordlib/sql/collaborators.sql
