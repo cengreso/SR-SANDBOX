@@ -177,6 +177,16 @@ function(message, runtime, project) {
 		}
 		else if(recCurr.getValue('custentity4') == 7){ //PS
 			
+            if(recCurr.getValue('jobtype') == 112 || 
+                recCurr.getValue('jobtype') == 119 ||
+                recCurr.getValue('jobtype') == 110 ||
+                recCurr.getValue('jobtype') == 116 ||
+                recCurr.getValue('jobtype') == 117 ||
+                recCurr.getValue('jobtype') == 118){
+
+                return true;
+            }
+
 			if(scriptContext.currentRecord.id){
 				
 				if(recCurr.getValue('entitystatus') == 1 ||
