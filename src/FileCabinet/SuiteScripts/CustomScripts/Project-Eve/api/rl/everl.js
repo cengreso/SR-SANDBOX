@@ -14,21 +14,7 @@ define(['N/https', 'N/query', 'N/file', 'N/url', 'N/record', '../library/evehelp
 				log.debug('requestBody', requestBody)
 				if (requestBody.rgs_type == "create") {
 					var callback = evehelper.createrag(requestBody)
-				} else {
-
-					// log.debug('requestParams', requestBody)
-					// var projecturl = evehelper.projectURL(requestBody.projectid)
-					// log.debug('projecturl', projecturl)
-					// // var arrproject = evehelper.getproject({projectid: requestBody.projectid})
-					// // log.debug('arrproject', arrproject)
-					//
-					// if (requestBody.workplaceid) {
-					// 	var id = requestBody.workplaceid
-					// 	var arrprojects = evehelper.getprojects({workplaceid: id})
-					// 	log.debug('arrprojects', arrprojects)
-					// }
 				}
-
 				return {
 					status: 'success',
 					message: callback

@@ -1,0 +1,1 @@
+SELECT id, name FROM customrecord_traffic_light where UPPER(name) LIKE UPPER('%?%')

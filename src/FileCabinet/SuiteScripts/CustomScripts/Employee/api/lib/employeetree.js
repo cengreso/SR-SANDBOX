@@ -54,7 +54,7 @@ function(record, query, task, file) {
 	                var idParent = rocketeer.parentid;
 	                var idEmployee = rocketeer.id;
 	                var team = hashTable[idEmployee];
-	                delete team['parentid'];
+	                //delete team['parentid'];
 
                 	hashTable[idParent].team.push(team);	
                 	hashTable[idParent].ids.push(idEmployee);	
@@ -112,11 +112,38 @@ function(record, query, task, file) {
 	    return retMe.ids;
 	};
 	
+	getManagers = function(option){
+		
+		var retMe = [];
+		
+		var arrFamily = getFamily();
+        var nLevel = 10;
+        var id = option.id;
+        
+        while (nLevel > 1) {
+
+            JSON.stringify(arrFamily, function (_, nestedValue) {
+
+                try {
+                    if (nestedValue && nestedValue['id'] == id) {
+                        id = nestedValue['parentid'];
+                        nLevel = nestedValue['level'];
+                        retMe.push(id);
+                    }
+                } catch (err) {}
+
+                return nestedValue;
+            });
+        }
+	    
+	    return retMe;
+	};
 	
     return {
     	update: update,
     	getDirectReport: getDirectReport,
-    	getAllReport: getAllReport
+    	getAllReport: getAllReport,
+    	getManagers: getManagers
     };
     
 });
