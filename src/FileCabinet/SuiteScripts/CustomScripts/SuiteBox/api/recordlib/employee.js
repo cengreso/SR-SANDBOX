@@ -15,7 +15,7 @@ define(['N/search','N/record', 'N/runtime', '../lib/folder.js', 'N/file','N/quer
 				var retMe = {}
 
 				var sSql = file.load({
-					id: 309848 // SuiteBox/api/recordlib/sql/employee.sql
+					id: 309848 // SuiteBox/api/recordlib/sql/getemployee.sql
 				}).getContents();
 
 				var objEmployee = query.runSuiteQL({
@@ -90,6 +90,18 @@ define(['N/search','N/record', 'N/runtime', '../lib/folder.js', 'N/file','N/quer
 				return retMe
 			}
 		};
+
+		var useExistingFolderid = function(objParentFolder){
+			var stParentId = null
+			if(objParentFolder.status == "failed"){
+				var objErrorJson = JSON.parse(objParentFolder.json)
+				if(objErrorJson.status == 409)
+					stParentId = objErrorJson.context_info.conflicts[0].id
+			}else
+				stParentId = objParentFolder.id
+			return stParentId
+		};
+
 		addCollab = function (options){
 			// { Single Collaborations
 			// 	type: 'folder', // folder
@@ -113,8 +125,6 @@ define(['N/search','N/record', 'N/runtime', '../lib/folder.js', 'N/file','N/quer
 
 				var collaborators = getCollabBySubsidiary(arrOptions);
 
-				log.debug('collaborators',collaborators);
-
 				for (var optionCTR = 0; optionCTR < collaborators.length; optionCTR++) 	{
 					collaborators[optionCTR].id = arrOptions.folderId
 					collaborators[optionCTR].type = arrOptions.type
@@ -124,40 +134,21 @@ define(['N/search','N/record', 'N/runtime', '../lib/folder.js', 'N/file','N/quer
 			}catch (e) {
 				log.debug('arrOptions', e);
 			}
+			getCollabBySubsidiary = function (options) {
+				var arr = JSON.parse(runtime.getCurrentScript().getParameter('custscriptjson_collaborators_by_sub'));
+				var arrSubsidiary = [];
+				for (var arrCTR = 0; arrCTR < arr.length; arrCTR++) {
+					var arrSubs = arr[arrCTR].subsidiary.split(',');
+					for (var subCTR = 0; subCTR < arrSubs.length; subCTR++) {
+						if(arrSubs[subCTR] == options.subsidiary)
+							arrSubsidiary.push(arr[arrCTR]);
+					}
+				}
+				return arrSubsidiary
+			}
 		};
 
-		var useExistingFolderid = function(objParentFolder){
-			var stParentId = null
-			if(objParentFolder.status == "failed"){
-				var objErrorJson = JSON.parse(objParentFolder.json)
-				if(objErrorJson.status == 409)
-					stParentId = objErrorJson.context_info.conflicts[0].id
-			}else
-				stParentId = objParentFolder.id
-			return stParentId
-		}
-		var getCollabBySubsidiary = function (options) {
-			// var sSql = file.load({
-			// 	id: 310049 // SuiteBox/api/recordlib/sql/collaborators.sql
-			// }).getContents();
-			//
-			// var arrSubsidiary = query.runSuiteQL({
-			// 	query: sSql,
-			// 	params: [options.subsidiary]
-			// }).asMappedResults()
-			var arr = JSON.parse(runtime.getCurrentScript().getParameter('custscriptjson_collaborators_by_sub'));
-			var arrSubsidiary = [];
-			for (var arrCTR = 0; arrCTR < arr.length; arrCTR++) {
-				var arrSubs = arr[arrCTR].subsidiary.split(',');
-				for (var subCTR = 0; subCTR < arrSubs.length; subCTR++) {
-					if(arrSubs[subCTR] == options.subsidiary)
-						arrSubsidiary.push(arr[arrCTR]);
-				}
-			}
 
-			log.debug('arrSubsidiary',arrSubsidiary)
-			return arrSubsidiary
-		}
 
 		return {
 			onboardEmployeeFolder: onboardEmployeeFolder,
@@ -166,29 +157,3 @@ define(['N/search','N/record', 'N/runtime', '../lib/folder.js', 'N/file','N/quer
 		}
 
 	});
-
-/*
-new
-{
-"type": "folder",
-"id": "folderId",
-"userid": "userid",
-"email": "email",
-"role": "role",
-"usertype": "usertype",
-"subsidiary":"subsidiary"
-}
-
-
-
-
-old
-{
-	type: 'folder',
-	id: folderId,
-	userid: 30912392949, // OR userid: '53397',email: emailSalesRep,
-	role: 'co-owner',
-	usertype: 'group',
-	recType:'employee'
-}
-*/

@@ -18,12 +18,21 @@ define(['N/record', '../api/suitebox', 'N/https','N/runtime'],
 		 */
 		function beforeLoad(scriptContext) { // will be move to aftersubmit
 			var newRec = scriptContext.newRecord;
-			try {w
-				// if (newRec.id == 1060646)
-					// suitebox.createFolder2({id: newRec.id, type: newRec.type, suiteboxtype:'onboarding'});
+			try {
+				if (newRec.id == 1060646) {
+					var foldercreation = suitebox.createFolder2({id: newRec.id, type: newRec.type, suiteboxtype: 'onboarding'});
+					log.debug('createFolder', foldercreation);
 
+					var objCollab = suitebox.addCollab2({ // collab by subsidiary
+						subsidiary: newRec.getValue('subsidiary'),
+						recType: 'employee',
+						collabs: true,
+						type: 'folder',
+						folderId: foldercreation.rootFolder,
+					});
+					log.debug('objCollab', objCollab)
+				}
 				log.debug('BeforeLoad')
-				var folderId = 173991569274
 				// var objCollab = suitebox.addCollab2({
 				// 		type: 'folder', // folder
 				// 		id: folderId, // target folder id
@@ -32,14 +41,7 @@ define(['N/record', '../api/suitebox', 'N/https','N/runtime'],
 				// 		usertype: 'group',
 				// 		recType:'employee'
 				// 	})
-				var objCollab = suitebox.addCollab2({ // collab by subsidiary
-					subsidiary: newRec.getValue('subsidiary'),
-					recType:'employee',
-					collabs:true,
-					type:'folder',
-					folderId:folderId,
-				});
-				log.debug('objCollab',objCollab)
+				// log.debug('objCollab',objCollab)
 
 				// { single collab
 				// 	type: 'folder', // folder

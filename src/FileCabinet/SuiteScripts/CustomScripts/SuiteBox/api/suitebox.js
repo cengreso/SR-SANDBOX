@@ -1,4 +1,4 @@
-define(['N/https', 'N/record', 'N/search', 'N/email', 'N/query', './lib/folder', './lib/file', './lib/sign','./recordlib/employee'],
+define(['N/https', 'N/record', 'N/search', 'N/email', 'N/query', './lib/folder', './lib/file', './lib/sign','../../Employee/api/lib/onboard.js'],
 /**
  * @param {https} https
  * @param {record} record
