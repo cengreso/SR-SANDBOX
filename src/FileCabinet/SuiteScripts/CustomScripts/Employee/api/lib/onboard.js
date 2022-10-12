@@ -538,7 +538,7 @@ define(['N/query', 'N/search', 'N/record', '../../../Helper/nstojson', '../../..
 					for (var optionCTR = 0; optionCTR < collaborators.length; optionCTR++) 	{
 						collaborators[optionCTR].id = arrOptions.folderId
 						collaborators[optionCTR].type = arrOptions.type
-						collab.addCollab(collaborators[optionCTR]);
+						collab.add(collaborators[optionCTR]);
 					}
 
 				}catch (e) {
