@@ -64,7 +64,7 @@ function(https, record, search, email, query, folder, boxfile, sign, employeelib
 	createFolder2 = function(options) {
 		try{
 			if(options.type == "employee" && options.suiteboxtype == 'onboarding'){
-				return employeelib.onboardEmployeeFolder(options)
+				return employeelib.createEmployeeFolder(options)
 			}
 		}catch(e){
 			log.debug('error on createFolder2', e)

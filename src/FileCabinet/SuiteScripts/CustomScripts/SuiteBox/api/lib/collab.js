@@ -3,29 +3,7 @@
  */
 define(['N/https','N/search','../../../Helper/jsonmapns','N/record', 'N/runtime'],
 function(https,search, jsonmapns,record, runtime){
-
-
-	/* ORIGINAL
-		//add sales rep
-		var objCollab = suitebox.addCollab({type: 'folder',
-			id: objFolder.id ,
-			email: emailSalesRep, // OR userid: '53397',
-			role: 'co-owner',
-			usertype: 'user'}, 'opportunity');
-	*/
-	/* MODIFIED
-		var objCollab = suitebox.addCollab({
-			type: 'folder',
-			id: objFolder.id ,
-			email: emailSalesRep, // OR userid: '53397',
-			role: 'co-owner',
-			usertype: 'user',
-			recType:'opportunity'
-		});
-	*/
-
-
-	addCollab = function (options){ // options.objCollab, options.recType
+	addCollab = function (options){
 
 		try {
 
@@ -35,7 +13,6 @@ function(https,search, jsonmapns,record, runtime){
 
 			if (options.email != undefined){
 				objAccessibleBy.login = options.objCollab.email;
-				// options.email = options.objCollab.email;
 			} else if (options.userid != undefined){
 				objAccessibleBy.id = options.userid;
 			}
@@ -45,11 +22,6 @@ function(https,search, jsonmapns,record, runtime){
 			log.debug('jsonMap',jsonMap)
 			log.debug('options',options)
 			var payload;
-
-			// for (const key of jsonMap) {
-			// 	log.debug(key)
-			// 	log.debug(jsonMap)
-			// }
 
 			for (var key = 0; key < Object.keys(jsonMap).length; key++) {
 				payload = jsonmapns.jsonGetValue({
@@ -100,7 +72,7 @@ function(https,search, jsonmapns,record, runtime){
 			log.error('error', 'ERROR: ' + err);
 		}
 	}
-	add = function (options){ // options.objCollab, options.recType
+	add = function (options){
 
 		try {
 
@@ -110,21 +82,13 @@ function(https,search, jsonmapns,record, runtime){
 
 			if (options.email != undefined){
 				objAccessibleBy.login = options.objCollab.email;
-				// options.email = options.objCollab.email;
 			} else if (options.userid != undefined){
 				objAccessibleBy.id = options.userid;
 			}
 
 			var recMapping = record.load({type:'customrecord_integration_mapping',id:132});
 			var jsonMap = JSON.parse(recMapping.getValue('custrecord_intmap_mapping'));
-			log.debug('jsonMap',jsonMap)
-			log.debug('options',options)
 			var payload;
-
-			// for (const key of jsonMap) {
-			// 	log.debug(key)
-			// 	log.debug(jsonMap)
-			// }
 
 			for (var key = 0; key < Object.keys(jsonMap).length; key++) {
 				payload = jsonmapns.jsonGetValue({
@@ -143,9 +107,6 @@ function(https,search, jsonmapns,record, runtime){
 				role: options.role
 			};
 
-
-			log.debug({title: 'suitebox.addCollab', details: 'request: ' + JSON.stringify(objPayload)});
-			log.debug('objAccessibleBy', objPayload)
 			var objResp = https.post({
 				url: 'https://api.box.com/2.0/collaborations',
 				body: JSON.stringify(objPayload),

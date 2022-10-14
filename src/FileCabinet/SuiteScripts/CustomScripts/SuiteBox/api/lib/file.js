@@ -73,7 +73,6 @@ function(https, email) {
 			    subject: option.data.subject,
 			    body: option.data.body,
 			    attachments: option.data.attachments
-			  //,relatedRecords: option.data.relatedrecord
 			});
 			
 			

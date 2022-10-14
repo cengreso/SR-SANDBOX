@@ -1,8 +1,8 @@
 define(['N/https','../suitebox.js','N/record'],
 
-function(https,suiteBoxMain,record) {
+function(https,suiteBox,record) {
    
-	create = function(options){ // createFolder v2
+	create = function(options){
 		log.debug('option', options)
 
 		var objFolder = options.objFolder;

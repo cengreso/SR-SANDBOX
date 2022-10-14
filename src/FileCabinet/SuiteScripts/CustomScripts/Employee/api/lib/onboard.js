@@ -466,7 +466,7 @@ define(['N/query', 'N/search', 'N/record', '../../../Helper/nstojson', '../../..
             return objSubsidiaries;
         }
 
-				onboardEmployeeFolder = function (options) {
+				createEmployeeFolder = function (options) {
 					try {
 						var stRecId = options.id;
 						var strecType = options.type;
@@ -526,13 +526,6 @@ define(['N/query', 'N/search', 'N/record', '../../../Helper/nstojson', '../../..
 				};
 			var addCollabs = function (arrOptions) {
 				try{
-					//{ // Multiple Collaborations based on Subsidary
-					//	subsidiary:17,
-					//	recType: "employee",
-					//	collabs: true,
-					//	folderId: 169990947918
-					//}
-
 					var collaborators = getCollabBySubsidiary(arrOptions);
 
 					for (var optionCTR = 0; optionCTR < collaborators.length; optionCTR++) 	{
@@ -572,7 +565,7 @@ define(['N/query', 'N/search', 'N/record', '../../../Helper/nstojson', '../../..
 			return {
 				create: create,
 				update: update,
-				onboardEmployeeFolder:onboardEmployeeFolder,
+				createEmployeeFolder:createEmployeeFolder,
 				addCollabs:addCollabs
 			};
 

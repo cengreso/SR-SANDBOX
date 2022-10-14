@@ -6,5 +6,6 @@
     <mapping directory="$PROJECT_DIR$/git-suitebox2" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/git-suitebox2/sros-netsuite" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/git/sros-netsuite" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/git2/sros-netsuite" vcs="Git" />
   </component>
 </project>
