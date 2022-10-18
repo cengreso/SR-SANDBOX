@@ -29,7 +29,6 @@ function(https,search, jsonmapns,record, runtime){
 					data: options,
 					key: Object.keys(jsonMap)[key]
 				});
-				log.debug('payload', payload)
 			}
 			var objPayload = {
 				item: {
@@ -52,8 +51,6 @@ function(https,search, jsonmapns,record, runtime){
 				},
 				credentials: ['custsecret_box_apikey']
 			});
-
-
 
 			log.debug({title: 'suitebox.addCollab', details: 'response: ' + objResp.code + ' ' + objResp.body});
 
@@ -96,7 +93,6 @@ function(https,search, jsonmapns,record, runtime){
 					data: options,
 					key: Object.keys(jsonMap)[key]
 				});
-				log.debug('payload', payload)
 			}
 			var objPayload = {
 				item: {

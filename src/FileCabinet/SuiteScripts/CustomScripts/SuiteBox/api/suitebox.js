@@ -1,10 +1,10 @@
-define(['N/https', 'N/record', 'N/search', 'N/email', 'N/query', './lib/folder', './lib/file', './lib/sign','../../Employee/api/lib/onboard.js'],
+define(['N/https', 'N/record', 'N/search', 'N/email', 'N/query', './lib/folder', './lib/file', './lib/sign','./lib/collab.js'],
 /**
  * @param {https} https
  * @param {record} record
  * @param {search} search
  */
-function(https, record, search, email, query, folder, boxfile, sign, employeelib) {
+function(https, record, search, email, query, folder, boxfile, sign, collab) {
 	createFolder = function(objFolder, objRecord) {
 		
 		try{
@@ -62,23 +62,10 @@ function(https, record, search, email, query, folder, boxfile, sign, employeelib
 		}
 	};
 	createFolder2 = function(options) {
-		try{
-			if(options.type == "employee" && options.suiteboxtype == 'onboarding'){
-				return employeelib.createEmployeeFolder(options)
-			}
-		}catch(e){
-			log.debug('error on createFolder2', e)
-		}
+		return folder.create(options);
 	};
 	addCollab2 = function(options) {
-		try{
-			if (options.recType == "employee" && !options.collabs)
-				return employeelib.addCollab(options)
-			else if (!!options.collabs)
-				return employeelib.addCollabs(options)
-		} catch(e) {
-			log.debug('addCollab2',e)
-		}
+		return collab.add(options)
 	};
 	addCollab = function(objCollab, recType) {
 
@@ -327,7 +314,7 @@ function(https, record, search, email, query, folder, boxfile, sign, employeelib
 	folderItems = function(option){
 		return folder.items(option);
 	};
-	
+
 	
     return {
     	createFolder: createFolder,

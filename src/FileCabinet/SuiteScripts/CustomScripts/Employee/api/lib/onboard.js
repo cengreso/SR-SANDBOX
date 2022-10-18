@@ -1,4 +1,5 @@
-define(['N/query', 'N/search', 'N/record', '../../../Helper/nstojson', '../../../Helper/jsonmapns', '../../../Library/momentjs/moment', 'N/runtime', '../../../BankInformation/api/bankinformation', '../../../SuiteBox/api/lib/folder.js', 'N/file','../../../SuiteBox/api/lib/collab.js'],
+define(['N/query', 'N/search', 'N/record', '../../../Helper/nstojson', '../../../Helper/jsonmapns', '../../../Library/momentjs/moment', 'N/runtime',
+		'../../../BankInformation/api/bankinformation', 'N/file','../../../SuiteBox/api/suitebox'],
     /**
      * @param {query} query
      * @param {search} search
@@ -8,7 +9,8 @@ define(['N/query', 'N/search', 'N/record', '../../../Helper/nstojson', '../../..
      * @param {moment} moment
      * @param {runtime} runtime
      */
-    function (query, search, record, nstojson, jsonmapns, moment, runtime, bankinformation, folder, file, collab) {
+    function (query, search, record, nstojson, jsonmapns, moment,
+							runtime, bankinformation, file, suitebox) {
         var userObj = runtime.getCurrentUser();
         var stDatePreference = userObj.getPreference({name: "dateformat"});
 
@@ -482,19 +484,15 @@ define(['N/query', 'N/search', 'N/record', '../../../Helper/nstojson', '../../..
 
 						var recMapping = record.load({type: 'customrecord_integration_mapping', id: 134});
 						var jsonMap = JSON.parse(recMapping.getValue('custrecord_intmap_mapping'));
-						var subsidiary = jsonmapns.jsonGetValue({
-							mapping: jsonMap,
-							data: objEmployee,
-							key: 'subsidiary'
-						});
+						var subsidiary = jsonmapns.jsonGetValue({mapping: jsonMap, data: objEmployee, key: 'subsidiary'});
 						var stInternalid = objEmployee.id;
 						var stEmployeeFolder = stInternalid + ' - ' + objEmployee.firstname + ', ' + objEmployee.lastname;
-						var arrEmpSubFolder = ['onboarding', 'allowance', 'salaryadjustments', 'Variable Compensation', 'Offboarding', 'Others']
+						var arrEmpSubFolder = ['onboarding', 'allowance', 'salaryadjustments', 'Variable Compensation', 'Offboarding', 'Others'];
 
 						var options = {
 							objFolder: {
 								name: stEmployeeFolder,
-								parent: subsidiary, // subsidiary folder id stSubsidiary will have a mapping
+								parent: subsidiary,
 							},
 							objRecord: {
 								record: strecType,
@@ -502,9 +500,8 @@ define(['N/query', 'N/search', 'N/record', '../../../Helper/nstojson', '../../..
 							},
 						};
 
-						var objParentFolder = folder.create(options);
-
-						var stParentId = useExistingFolderid(objParentFolder);// accepts Box's callback to re-align error
+						var objParentFolder = suitebox.createFolder2(options);
+						var stParentId = useExistingFolderid(objParentFolder);
 
 						if (!!stParentId)
 							for (var stSubFolderCTR = 0; stSubFolderCTR < arrEmpSubFolder.length; stSubFolderCTR++) {
@@ -512,9 +509,9 @@ define(['N/query', 'N/search', 'N/record', '../../../Helper/nstojson', '../../..
 									name: arrEmpSubFolder[stSubFolderCTR],
 									parent: parseInt(stParentId),
 								}
-								folder.create(options);
+								suitebox.createFolder2(options);
 							}
-						return {response: 'successful', message: 'employee folders created', rootFolder:stParentId}
+						return {response: 'successful', message: 'employee folders created', rootFolder:stParentId};
 
 					} catch (e) {
 						return {
@@ -524,32 +521,31 @@ define(['N/query', 'N/search', 'N/record', '../../../Helper/nstojson', '../../..
 						}
 					}
 				};
-			var addCollabs = function (arrOptions) {
-				try{
-					var collaborators = getCollabBySubsidiary(arrOptions);
-
-					for (var optionCTR = 0; optionCTR < collaborators.length; optionCTR++) 	{
-						collaborators[optionCTR].id = arrOptions.folderId
-						collaborators[optionCTR].type = arrOptions.type
-						collab.add(collaborators[optionCTR]);
-					}
-
-				}catch (e) {
-					log.debug('arrOptions', e);
-				}
-				function getCollabBySubsidiary(options) {
-					var arr = JSON.parse(runtime.getCurrentScript().getParameter('custscriptjson_collaborators_by_sub'));
-					var arrSubsidiary = [];
-					for (var arrCTR = 0; arrCTR < arr.length; arrCTR++) {
-						var arrSubs = arr[arrCTR].subsidiary.split(',');
-						for (var subCTR = 0; subCTR < arrSubs.length; subCTR++) {
-							if(arrSubs[subCTR] == options.subsidiary)
-								arrSubsidiary.push(arr[arrCTR]);
+				addCollaborators = function (arrOptions) {
+					try{
+						var collaborators = getCollabBySubsidiary(arrOptions);
+						for (var optionCTR = 0; optionCTR < collaborators.length; optionCTR++) 	{
+							collaborators[optionCTR].id = arrOptions.folderId
+							collaborators[optionCTR].type = arrOptions.type
+							suitebox.addCollab2(collaborators[optionCTR])
 						}
+
+					}catch (e) {
+						log.debug('arrOptions', e);
 					}
-					return arrSubsidiary
-				}
-			};
+					function getCollabBySubsidiary(options) {
+						var arr = JSON.parse(runtime.getCurrentScript().getParameter('custscriptjson_collaborators_by_sub'));
+						var arrSubsidiary = [];
+						for (var arrCTR = 0; arrCTR < arr.length; arrCTR++) {
+							var arrSubs = arr[arrCTR].subsidiary.split(',');
+							for (var subCTR = 0; subCTR < arrSubs.length; subCTR++) {
+								if(arrSubs[subCTR] == options.subsidiary)
+									arrSubsidiary.push(arr[arrCTR]);
+							}
+						}
+						return arrSubsidiary
+					}
+				};
 
 			var useExistingFolderid = function (objParentFolder) {
 				var stParentId = null
@@ -566,7 +562,7 @@ define(['N/query', 'N/search', 'N/record', '../../../Helper/nstojson', '../../..
 				create: create,
 				update: update,
 				createEmployeeFolder:createEmployeeFolder,
-				addCollabs:addCollabs
+				addCollaborators:addCollaborators
 			};
 
     });
