@@ -21,17 +21,17 @@ define(['N/record', '../../Project-Eve/Eve.js'],
 		 */
 		function beforeLoad(scriptContext) {
 			var projectId = scriptContext.newRecord.getValue('custrecord_rgs_project')
-			Eve.remind({
-				"event":"rag",
-				"recipient":["100086059662703"],
-				"message-type":"reminder",
-				"project":{
-					"name":"EVENT-23",
-					"project-manager":"Cornello Engreso",
-					"url":"google.com"
-				},
-				"projectid":projectId
-			})
+			// Eve.remind({
+			// 	"event":"rag",
+			// 	"recipient":["100086059662703"],
+			// 	"message-type":"reminder",
+			// 	"project":{
+			// 		"name":"EVENT-23",
+			// 		"project-manager":"Cornello Engreso",
+			// 		"url":"google.com"
+			// 	},
+			// 	"projectid":projectId
+			// })
 		}
 
 		/**

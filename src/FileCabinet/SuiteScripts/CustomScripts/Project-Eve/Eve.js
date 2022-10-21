@@ -3,18 +3,14 @@
  */
 define(['./api/library/evehelper.js'],
 	function (evehelper) {
+		var returnObj = {}
 
-		function remind(options) {
-			log.debug('remind', options)
-			try {
-				// evehelper.post(options)
-			} catch (e) {
-				log.debug('e',e)
-			}
+		returnObj.createrag = function(options) {
+			return evehelper.create(options)
 		}
-
-		return {
-			remind: remind,
+		returnObj.getprojects = function (options) {
+			return evehelper.get(options)
 		}
+		return returnObj
 
 	});

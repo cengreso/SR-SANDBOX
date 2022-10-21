@@ -13,10 +13,6 @@ LEFT JOIN employee AS emp
 LEFT JOIN customrecord_rag_status ragstat
 	ON project.custentity_rag_summary = ragstat.id
 WHERE
-	project.custentity_rag_summary IS NULL
-	AND
-	project.datecreated <= (project.datecreated+7)
-	AND
 	project.projectmanager IS NOT NULL
 	AND
 	emp.custentity_workplace_id = ?

@@ -2,7 +2,7 @@
  * @NApiVersion 2.1
  * @NScriptType MapReduceScript
  */
-define(['../library/evehelper.js', 'N/https'],
+define(['../api/library/evehelper.js', 'N/https'],
 
 	(evehelper, https) => {
 		const getInputData = (inputContext) => {

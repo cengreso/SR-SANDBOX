@@ -3,7 +3,7 @@
  * @NScriptType ScheduledScript
  */
 
-define(['../library/evehelper', 'N/https'],
+define(['../api/library/evehelper', 'N/https'],
 
 	(evehelper, https) => {
 

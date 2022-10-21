@@ -10,12 +10,12 @@ define(['N/https', 'N/query', 'N/file', 'N/url', 'N/record'],
 			projectid: "custrecord_rgs_project"
 		}
 		var objectFunc = {}
-		objectFunc.createrag = function (options) {
+		objectFunc.create = function (options) {
 			try {
 				log.debug('options', options)
 
 				var sSql = file.load({
-					id: 313460
+					id: 315861 // rag-getproject.sql
 				}).getContents();
 
 				var getproject = query.runSuiteQL({
@@ -23,10 +23,10 @@ define(['N/https', 'N/query', 'N/file', 'N/url', 'N/record'],
 					params: [options.name]
 				}).asMappedResults()[0];
 
-				log.debug('getproject', getproject)
 				options.projectid = getproject.id
 				options.colorid = this.getRagColor(options.status).id
 
+				log.debug('options',options)
 				var recrag = record.create({
 					type: 'customrecord_rag_status',
 				});
@@ -45,7 +45,7 @@ define(['N/https', 'N/query', 'N/file', 'N/url', 'N/record'],
 					log.debug('Rag Created', ragid)
 					return {
 						status: 'SUCCESS',
-						message: "Rag is created\n ragid:" + ragid,
+						message: "Rag is created id:" + ragid,
 					}
 				} else {
 					return {
@@ -80,7 +80,7 @@ define(['N/https', 'N/query', 'N/file', 'N/url', 'N/record'],
 		}
 		objectFunc.getproject = function (obj) {
 			var sSql = file.load({
-				id: 312756
+				id: 315861
 			}).getContents();
 
 			return query.runSuiteQL({
@@ -88,16 +88,16 @@ define(['N/https', 'N/query', 'N/file', 'N/url', 'N/record'],
 				params: [obj.projectid]
 			}).asMappedResults()[0];
 		}
-		objectFunc.getprojects = function (workplaceid) {
+		objectFunc.get = function (workplaceid) {
 			log.debug('getprojects', workplaceid)
 			var sSql = file.load({
-				id: 313056,
+				id: 315663,
 			}).getContents();
 			var projects = query.runSuiteQL({
 				query: sSql,
 				params: [workplaceid]
 			}).asMappedResults();
-			log.debug('projects', projects)
+			log.debug('projects', projects);
 			var output = {
 				managerid: projects[0].managerid,
 				managername: projects[0].managername,
@@ -114,11 +114,12 @@ define(['N/https', 'N/query', 'N/file', 'N/url', 'N/record'],
 					url: this.projectURL(project.id)
 				})
 			}
+			log.debug('output', output);
 			return output
 		}
 		objectFunc.getprojectsss = function (obj) { // SS will be put to MR project reminder
 			var sSql = file.load({
-				id: 313156,
+				id: 315663,
 			}).getContents();
 			var res = query.runSuiteQL({
 				query: sSql,
@@ -150,7 +151,7 @@ define(['N/https', 'N/query', 'N/file', 'N/url', 'N/record'],
 		}
 		objectFunc.getemployee = function (obj) {
 			var sSql = file.load({
-				id: 313761
+				id: 315761
 			}).getContents();
 			return query.runSuiteQL({
 				query: sSql,

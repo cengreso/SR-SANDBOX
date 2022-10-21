@@ -3,9 +3,9 @@
  * @NScriptType Restlet
  * @NModuleScope SameAccount
  */
-define(['../api/jira', '../../Project-Eve/api/library/evehelper.js', 'N/runtime'],
+define(['../api/jira', '../../Project-Eve/Eve.js', 'N/runtime'],
 
-	function (jira, evehelper, runtime) {
+	function (jira, eve, runtime) {
 
 		/**
 		 * Function called upon sending a GET request to the RESTlet.
@@ -54,9 +54,9 @@ define(['../api/jira', '../../Project-Eve/api/library/evehelper.js', 'N/runtime'
 					} else if (requestBody.action == 'update' && requestBody.record == 'pmojob') {
 						retMe = jira.updateProject(requestBody);
 					} else if (requestBody.action == 'create' && requestBody.bot == "eve") {
-						return evehelper.createrag(requestBody);
+						return eve.createrag(requestBody);
 					} else if (requestBody.action == 'getproject' && requestBody.bot == "eve"){
-						return evehelper.getprojects(requestBody.workplaceid)
+						return eve.getprojects(requestBody.workplaceid)
 					}
 				} else {
 					retMe = {status: 'FAILED', message: 'Empty request.'};

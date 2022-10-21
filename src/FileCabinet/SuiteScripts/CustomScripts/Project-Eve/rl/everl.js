@@ -2,7 +2,7 @@
  * @NApiVersion 2.1
  * @NScriptType Restlet
  */
-define(['N/https', 'N/query', 'N/file', 'N/url', 'N/record', '../library/evehelper.js'],
+define(['N/https', 'N/query', 'N/file', 'N/url', 'N/record', '../api/library/evehelper.js'],
 	function (https, query, file, url, record, evehelper) {
 
 		function get(requestParams) {
