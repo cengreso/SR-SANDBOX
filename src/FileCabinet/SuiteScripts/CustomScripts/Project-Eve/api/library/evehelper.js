@@ -5,15 +5,16 @@ define(['N/https', 'N/query', 'N/file', 'N/url', 'N/record'],
 	function (https, query, file, url, record) {
 		var MAPPING = {
 			colorid: "custrecord_rgs_status",
-			name: "name",
+			summary: "name",
 			description: "custrecord_rgs_notes",
-			projectid: "custrecord_rgs_project"
+			projectid: "custrecord_rgs_project",
+			workplaceid: "custpage_workplaceid"
 		}
 		var objectFunc = {}
 		objectFunc.create = function (options) {
 			try {
+				log.debug('objectFunc.create',"<===== create Rag Start =====>")
 				log.debug('options', options)
-
 				var sSql = file.load({
 					id: 315861 // rag-getproject.sql
 				}).getContents();
@@ -26,23 +27,15 @@ define(['N/https', 'N/query', 'N/file', 'N/url', 'N/record'],
 				options.projectid = getproject.id
 				options.colorid = this.getRagColor(options.status).id
 
-				log.debug('options',options)
-				var recrag = record.create({
-					type: 'customrecord_rag_status',
-				});
+				var recrag = record.create({type: 'customrecord_rag_status'});
 
-				for (var key in MAPPING) {
-					recrag.setValue({
-						fieldId: MAPPING[key],
-						value: options[key]
-					});
-				}
-				var emp = this.getemployee({id: getproject.manager_id})
+				for (var key in MAPPING)
+					recrag.setValue({fieldId: MAPPING[key], value: options[key]});
 
-				log.debug('emp', emp.workplaceid)
-				if (emp.workplaceid == options.workplaceid) {
+				var isresourced = this.isResourced({id:options.workplaceid, projname:options.name});
+
+				if (isresourced){
 					var ragid = recrag.save()
-					log.debug('Rag Created', ragid)
 					return {
 						status: 'SUCCESS',
 						message: "Rag is created id:" + ragid,
@@ -50,16 +43,15 @@ define(['N/https', 'N/query', 'N/file', 'N/url', 'N/record'],
 				} else {
 					return {
 						status: 'FAILED',
-						message: "your request is invalid, you are not the project manager"
+						message: "Your request is invalid, you are not related to the Project"
 					}
-					log.debug('not created')
 				}
 			} catch (e) {
+				log.debug('e',e)
 				return {
 					status: "FAILED",
 					message: e
 				}
-				log.debug('e', e)
 			}
 		}
 		objectFunc.getRagColor = function (color) {
@@ -89,33 +81,48 @@ define(['N/https', 'N/query', 'N/file', 'N/url', 'N/record'],
 			}).asMappedResults()[0];
 		}
 		objectFunc.get = function (workplaceid) {
-			log.debug('getprojects', workplaceid)
-			var sSql = file.load({
-				id: 315663,
-			}).getContents();
-			var projects = query.runSuiteQL({
-				query: sSql,
-				params: [workplaceid]
-			}).asMappedResults();
-			log.debug('projects', projects);
-			var output = {
-				managerid: projects[0].managerid,
-				managername: projects[0].managername,
-				workplaceid: projects[0].workplaceid,
-				projects: []
-			};
-			for (var i = 0; i < projects.length; i++) {
-				var project = projects[i]
-				output['projects'].push({
-					id: project.id,
-					projectid: project.projectid,
-					projectname: project.projectname,
-					datecreated: project.datecreated,
-					url: this.projectURL(project.id)
-				})
+			try {
+				if (!workplaceid)
+					return
+				var sSql = file.load({
+					id: 315663,
+				}).getContents();
+				var projects = query.runSuiteQL({
+					query: sSql,
+					params: [workplaceid]
+				}).asMappedResults();
+				var emp = objectFunc.getempbywpid(workplaceid)
+				var output = {
+					id: emp.id,
+					name: emp.name,
+					workplaceid: emp.workplaceid,
+					projects: []
+				};
+				for (var i = 0; i < projects.length; i++) {
+					var project = projects[i], datecreated, ignore = false;
+					if(project.ismanager == "true")
+						project.ismanager = true;
+					else
+						project.ismanager = false;
+					if (project.ragid)
+						datecreated = project.ragdatecreated;
+					else
+						datecreated = project.projdatecreated;
+					output['projects'].push({
+						id: project.id,
+						projectid: project.projectid,
+						projectname: project.projectname,
+						projectmanagername:project.projectmanagername,
+						datecreated: datecreated,
+						url: this.projectURL(project.id),
+						ismanager: project.ismanager
+					});
+				}
+				log.debug('output', output);
+				return output
+			} catch (e) {
+				log.debug('e', e)
 			}
-			log.debug('output', output);
-			return output
 		}
 		objectFunc.getprojectsss = function (obj) { // SS will be put to MR project reminder
 			var sSql = file.load({
@@ -153,10 +160,33 @@ define(['N/https', 'N/query', 'N/file', 'N/url', 'N/record'],
 			var sSql = file.load({
 				id: 315761
 			}).getContents();
-			return query.runSuiteQL({
+			log.debug('SQL', sSql)
+			var employee = query.runSuiteQL({
 				query: sSql,
 				params: [obj.id]
 			}).asMappedResults()[0];
+			log.debug('employee', employee);
+			return employee;
+		}
+		objectFunc.getempbywpid = function (workplaceid) {
+			return query.runSuiteQL({
+				query: 'SELECT id,BUILTIN.DF(id) as name, custentity_workplace_id as workplaceid FROM employee WHERE custentity_workplace_id = ' + workplaceid,
+			}).asMappedResults()[0];
+		}
+		objectFunc.isResourced = function (obj) {
+			var retMe = false;
+			var sSql = file.load({
+				id: 316061
+			}).getContents();
+			log.debug('SQL', obj)
+			var resourced = query.runSuiteQL({
+				query: sSql,
+				params: [obj.projname, obj.id]
+			}).asMappedResults();
+			log.debug('resourced', resourced);
+			if(resourced.length)
+				retMe = true
+			return retMe
 		}
 		return objectFunc
 	});

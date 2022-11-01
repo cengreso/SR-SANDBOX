@@ -9,9 +9,9 @@ define(['../../Project-Eve/Eve.js'],
         const post = (requestBody) => {
 					try{
 						log.debug('POST', requestBody)
-						if (requestBody.action == 'create' && requestBody.type == "eve") {
+						if (requestBody.action == 'create' && requestBody.type == "rag") {
 							return eve.createrag(requestBody);
-						} else if (requestBody.action == 'getprojects' && requestBody.type == "eve") {
+						} else if (requestBody.action == 'getprojects' && requestBody.type == "rag") {
 							return eve.getprojects(requestBody.workplaceid);
 						} else
 							return{status:'failed', message: 'no bot identified'}

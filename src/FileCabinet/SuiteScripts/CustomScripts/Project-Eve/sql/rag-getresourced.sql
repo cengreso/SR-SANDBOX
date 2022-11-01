@@ -2,12 +2,7 @@ SELECT
     project.id as id,
 	project.entityid as projectid,
 	project.companyname as projectname,
-	project.datecreated as projdatecreated,
-	ragstat.custrecord_rgs_date as ragdatecreated,
-	TO_DATE(project.lastModifiedDate, 'DD-Mon-YYYY' ) as fromdate,
-	TO_DATE(project.lastModifiedDate+7, 'DD-Mon-YYYY' ) as todate,
 	BUILTIN.RELATIVE_RANGES( 'TODAY', 'END' ) as today,
-	project.projectmanager as managerid,
 	BUILTIN.DF(project.projectmanager) as projectmanagername,
 	emp.custentity_workplace_id as workplaceid,
 	ragstat.id as ragid,
@@ -24,29 +19,10 @@ LEFT JOIN employee AS emp
 WHERE
 	project.projectmanager IS NOT NULL
 	AND
-	(BUILTIN.RELATIVE_RANGES( 'TODAY', 'START' )
-		NOT BETWEEN
-			TO_DATE(
-				(CASE
-					WHEN ragstat.id IS NULL
-					THEN project.datecreated
-					ELSE ragstat.custrecord_rgs_date
-					END
-			),  'DD-Mon-YYYY' )
-			AND
-			TO_DATE(
-				(CASE
-					WHEN ragstat.id IS NULL
-					THEN project.datecreated+7
-					ELSE ragstat.custrecord_rgs_date+7
-					END
-			),  'DD-Mon-YYYY' )
-	)
+		project.entityid = ?
 	AND
+	(
 		emp.custentity_workplace_id = ?
 	AND
 		resource.jobResource = emp.id
-	AND
-		project.entitystatus != 1
-	AND
-		project.entitystatus != 4
+	)

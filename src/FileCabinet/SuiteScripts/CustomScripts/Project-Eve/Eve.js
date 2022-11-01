@@ -3,14 +3,17 @@
  */
 define(['./api/library/evehelper.js'],
 	function (evehelper) {
-		var returnObj = {}
+		var eve = {}
 
-		returnObj.createrag = function(options) {
+		eve.createrag = function(options) {
 			return evehelper.create(options)
 		}
-		returnObj.getprojects = function (options) {
+		eve.getprojects = function (options) {
 			return evehelper.get(options)
 		}
-		return returnObj
+		eve.getempbywpid = function(workplaceid){
+			return evehelper.getempbywpid(workplaceid)
+		}
+		return eve
 
 	});

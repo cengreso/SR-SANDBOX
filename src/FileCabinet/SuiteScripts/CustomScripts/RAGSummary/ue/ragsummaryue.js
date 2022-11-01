@@ -4,11 +4,11 @@
  * @NModuleScope SameAccount
  */
 
-define(['N/record', '../../Project-Eve/Eve.js'],
+define(['N/record', 'N/ui/serverWidget','../../Project-Eve/Eve.js'],
 	/**
 	 * @param {record} record
 	 */
-	function (record, Eve) {
+	function (record, serverWidget, eve) {
 
 		/**
 		 * Function definition to be triggered before record is loaded.
@@ -20,18 +20,13 @@ define(['N/record', '../../Project-Eve/Eve.js'],
 		 * @Since 2015.2
 		 */
 		function beforeLoad(scriptContext) {
-			var projectId = scriptContext.newRecord.getValue('custrecord_rgs_project')
-			// Eve.remind({
-			// 	"event":"rag",
-			// 	"recipient":["100086059662703"],
-			// 	"message-type":"reminder",
-			// 	"project":{
-			// 		"name":"EVENT-23",
-			// 		"project-manager":"Cornello Engreso",
-			// 		"url":"google.com"
-			// 	},
-			// 	"projectid":projectId
-			// })
+			try{
+				var form = scriptContext.form;
+				var workpalceidholder = form.addField({id:'custpage_workplaceid', label:'workplaceid', type:serverWidget.FieldType.TEXT});
+				// workpalceidholder.updateDisplayType({displayType:'hidden'});
+			}catch(e){
+				log.debug('e',e)
+			}
 		}
 
 		/**
@@ -44,7 +39,15 @@ define(['N/record', '../../Project-Eve/Eve.js'],
 		 * @Since 2015.2
 		 */
 		function beforeSubmit(scriptContext) {
-
+			try{
+				if(scriptContext.newRecord.getValue('custpage_workplaceid')){
+					var workplaceid = scriptContext.newRecord.getValue('custpage_workplaceid');
+					var employeeid = eve.getempbywpid(workplaceid).id;
+					scriptContext.newRecord.setValue('custrecord_rgs_author', employeeid);
+				}
+			}catch(e){
+				log.debug('e',e)
+			}
 		}
 
 		/**
@@ -78,6 +81,7 @@ define(['N/record', '../../Project-Eve/Eve.js'],
 
 		return {
 			beforeLoad: beforeLoad,
+			beforeSubmit:beforeSubmit,
 			afterSubmit: afterSubmit
 		};
 

@@ -1,5 +1,5 @@
 SELECT
-	project.id,
+	project.id as id,
 	project.entitytitle as title,
 	project.projectmanager as manager_id,
 	BUILTIN.DF(project.projectmanager) as manager_name,
