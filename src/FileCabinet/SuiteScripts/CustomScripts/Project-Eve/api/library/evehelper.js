@@ -124,35 +124,36 @@ define(['N/https', 'N/query', 'N/file', 'N/url', 'N/record'],
 				log.debug('e', e)
 			}
 		}
-		objectFunc.getprojectsss = function (obj) { // SS will be put to MR project reminder
+		objectFunc.getprojectsss = function () { // SS will be put to MR project reminder
 			var sSql = file.load({
 				id: 315663,
 			}).getContents();
+
 			var res = query.runSuiteQL({
-				query: sSql,
+				query: sSql.replace(`AND emp.custentity_workplace_id = ?`,''),
 			}).asMappedResults();
 			log.debug('getprojects', res)
 			return res
 		}
-		objectFunc.mergeIds = function (entry) {
-			log.debug('whole entry', entry)
+		objectFunc.mergeIds = function (list) {
 			const out = {};
-			try {
-				for (var i = 0; i < entry.length; i++) {
-					log.debug('entry', entry[i])
-					var objout = Object.keys(out)
-					if (entry[i].manager_id) {
-						var existingEntry = objout.includes(entry[i].manager_id);
-						if (existingEntry) {
-							out[entry[i].manager_id].push(entry[i])
-						} else {
-							out[entry[i].manager_id] = [entry[i]];
-						}
+			log.debug('list',list);
+			for (entry of list) {
+				var objout = Object.keys(out);
+				if (entry.employeeid) {
+					var existingEntry = objout.includes('ent_' + entry.employeeid);
+					if (existingEntry) {
+						out['ent_' + entry.employeeid]["projects"].push(entry);
+					} else {
+						out['ent_' + entry.employeeid] = {
+							id:entry.id,
+							name:entry.employeename,
+							workplaceid:entry.workplaceid,
+							projects:[entry],
+						};
 					}
+					log.debug('out', out)
 				}
-				log.debug('out', out)
-			} catch (e) {
-				log.debug('e', e)
 			}
 			return out;
 		}

@@ -3,9 +3,9 @@
  * @NScriptType ScheduledScript
  */
 
-define(['../api/library/evehelper', 'N/https'],
+define(['../api/library/evehelper', 'N/https', 'N/runtime'],
 
-	(evehelper, https) => {
+	(evehelper, https, runtime) => {
 
 		/**
 		 * Defines the Scheduled script trigger point.
@@ -15,26 +15,27 @@ define(['../api/library/evehelper', 'N/https'],
 		 */
 		const execute = (scriptContext) => {
 			try {
-				var projects = evehelper.getprojectsss()
-				var consolidated = mergeIds(projects)
-				log.debug('consolidated', consolidated)
+				var scriptObj = runtime.getCurrentScript();
+				var projects = evehelper.getprojectsss();
+				var consoled = evehelper.mergeIds(projects);
 
-				for (var empkey in consolidated) {
-					var proj = consolidated[empkey]
+				for (var key in consoled) {
+					var proj = consoled[key];
+
 					var payload = {
 						"event": "rag",
-						"recipient": [String(proj[0].workplaceid)],
+						"name":proj.name,
+						"recipient": [proj.workplaceid],
 						"message-type": "reminder",
-						"project": []
+						"project": proj.projects
 					}
-					for (var projElement of proj) {
-						payload['project'].push({
-							"name": projElement.title,
-							"project-manager": projElement.manager_name,
-							"url": evehelper.projectURL(projElement.id)
-						});
+					log.debug('payload',payload)
+					for (var [i, project] of proj.projects.entries()) {
+						proj.projects[i]['project-manager'] = project.projectmanagername
+						proj.projects[i]['name'] = project.projectname
+						proj.projects[i]['url'] = evehelper.projectURL(project.id)
 					}
-					log.debug('payload', payload)
+					log.debug('payload',payload)
 					var objResp = https.post({
 						url: 'https://us-central1-itsm-932-infraops.cloudfunctions.net/urd-on2wp-bot-notification-ingestor-dev-main',
 						body: JSON.stringify(payload),
@@ -46,26 +47,11 @@ define(['../api/library/evehelper', 'N/https'],
 					});
 					log.debug('objResp', objResp);
 				}
-				log.debug('----DONE EXECUTING----');
+
+				log.debug('----DONE EXECUTING----','Governance Left:'+ scriptObj.getRemainingUsage());
 			} catch (e) {
 				log.debug('e', e)
 			}
-		}
-
-		function mergeIds(list) {
-			const out = {};
-			for (entry of list) {
-				var objout = Object.keys(out);
-				if (entry.manager_id) {
-					var existingEntry = objout.includes('ent_' + entry.manager_id.toString());
-					if (existingEntry) {
-						out['ent_' + entry.manager_id].push(entry);
-					} else {
-						out['ent_' + entry.manager_id] = [entry];
-					}
-				}
-			}
-			return out;
 		}
 
 		return {execute}

@@ -4,16 +4,18 @@ SELECT
 	project.companyname as projectname,
 	project.datecreated as projdatecreated,
 	ragstat.custrecord_rgs_date as ragdatecreated,
-	TO_DATE(project.lastModifiedDate, 'DD-Mon-YYYY' ) as fromdate,
-	TO_DATE(project.lastModifiedDate+7, 'DD-Mon-YYYY' ) as todate,
-	BUILTIN.RELATIVE_RANGES( 'TODAY', 'END' ) as today,
 	project.projectmanager as managerid,
 	BUILTIN.DF(project.projectmanager) as projectmanagername,
 	emp.custentity_workplace_id as workplaceid,
 	ragstat.id as ragid,
+
 	CASE WHEN project.projectmanager = emp.id THEN 'true'
-	ELSE 'false'
-	END AS isManager
+	    ELSE 'false'
+	    END AS isManager,
+
+	BUILTIN.DF(emp.id) as employeename,
+	emp.id as employeeid,
+
 FROM job AS project
 LEFT JOIN customrecord_rag_status ragstat
 	ON project.custentity_rag_summary = ragstat.id
@@ -42,8 +44,7 @@ WHERE
 					END
 			),  'DD-Mon-YYYY' )
 	)
-	AND
-		emp.custentity_workplace_id = ?
+	AND emp.custentity_workplace_id = ?
 	AND
 		resource.jobResource = emp.id
 	AND
